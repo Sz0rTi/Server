@@ -76,12 +76,11 @@ namespace RESTServer.Controllers
         [HttpPost]
         public async Task<ActionResult<Invoice>> PostInvoice(Invoice invoice)
         {
-            //jak pobrać stawkę z innej tabeli?
             double sum = 0;
             foreach(ProductInOrder item in invoice.ProductsList)
             {
                 var stage = _context.TaxStages.Find(item.TaxStageId);
-                sum += (item.PricePerItem * item.Amount) / (1.0 + stage.Stage);
+                sum += (item.PricePerItem * item.Amount) / ((100.0 + stage.Stage)/100.0);
             }
             invoice.Price = sum;
             _context.Invoices.Add(invoice);
