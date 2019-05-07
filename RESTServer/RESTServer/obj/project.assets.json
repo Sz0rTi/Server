@@ -12957,11 +12957,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\Projekty\\GitHub\\RESTServer\\RESTServer\\RESTServer.csproj",
+      "projectUniqueName": "E:\\Projekty\\GitHub\\SERWER\\RESTServer\\RESTServer\\RESTServer.csproj",
       "projectName": "RESTServer",
-      "projectPath": "E:\\Projekty\\GitHub\\RESTServer\\RESTServer\\RESTServer.csproj",
+      "projectPath": "E:\\Projekty\\GitHub\\SERWER\\RESTServer\\RESTServer\\RESTServer.csproj",
       "packagesPath": "C:\\Users\\adafdfdsf\\.nuget\\packages\\",
-      "outputPath": "E:\\Projekty\\GitHub\\RESTServer\\RESTServer\\obj\\",
+      "outputPath": "E:\\Projekty\\GitHub\\SERWER\\RESTServer\\RESTServer\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

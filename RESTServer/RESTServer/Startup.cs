@@ -29,10 +29,15 @@ namespace RESTServer
         public void ConfigureServices(IServiceCollection services)
         {
             //services.AddDbContext<ToDoContext>(opt => opt.UseInMemoryDatabase("ToDoList"));
-            //services.AddDbContext<MagazineContext>(opt => opt.UseInMemoryDatabase("MagazineList"));
+            
             
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-            services.AddDbContext<MagazineContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("MagazineContext")));
+
+            /*
+             * DO TESTÓW BEZ UŻYCIA ZEWNĘTRZNEJ BAZY DANYCH
+             * services.AddDbContext<MagazineContext>(opt => opt.UseInMemoryDatabase("MagazineList"));*/
+
+            services.AddDbContext<MagazineContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("MagazineContext")));//z użyciem zewnętrznej (lokalnej) bazy danych
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
