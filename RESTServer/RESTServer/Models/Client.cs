@@ -14,7 +14,7 @@ namespace RESTServer.Models
         public string Name { get; set; }
         public string Adress { get; set; }
         public string Mail { get; set; }
-
-        public virtual ICollection<Invoice> Invoices { get; set; }
+        public string NIP { get; set; }
+        public virtual ICollection<InvoiceSell> InvoicesSell { get; set; }
     }
 }

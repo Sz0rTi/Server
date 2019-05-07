@@ -14,9 +14,11 @@ namespace RESTServer.Models
         public string Name { get; set; }
         public double PriceNetto { get; set; }
         public string Description { get; set; }
-        public int CategoryId { get; set; }
-        public double TaxStageId { get; set; }
+        public long CategoryId { get; set; }
+        public long TaxStageId { get; set; }
+        public long UnitId { get; set; }
         public virtual TaxStage TaxStage { get; set; }
         public virtual Category Category { get; set; }
+        public virtual Unit Unit { get; set; }
     }
 }

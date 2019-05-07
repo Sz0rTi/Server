@@ -7,17 +7,17 @@ using System.Threading.Tasks;
 
 namespace RESTServer.Models
 {
-    public class ProductInOrder
+    public class ProductSell
     {
         //[Key, ForeignKey("Product,Invoice")]
-        public long ProductInOrderId { get; set; }
-        public long InvoiceId { get; set; }
+        public long ProductSellId { get; set; }
+        public long InvoiceSellId { get; set; }
         public long ProductId { get; set; }
         public int Amount { get; set; }
-        public double PricePerItem { get; set; }
+        public double PricePerItemNetto{ get; set; }
+        public double PricePerItemBrutto { get; set; }
         public long TaxStageId { get; set; }
-
         public virtual Product Product { get; set; }
-        public virtual Invoice Invoice { get; set; }
+        public virtual InvoiceSell InvoiceSell { get; set; }
     }
 }

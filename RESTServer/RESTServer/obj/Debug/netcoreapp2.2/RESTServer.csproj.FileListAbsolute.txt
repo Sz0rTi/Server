@@ -26,3 +26,17 @@ E:\Projekty\GitHub\RESTServer\RESTServer\obj\Debug\netcoreapp2.2\RESTServer.Asse
 E:\Projekty\GitHub\RESTServer\RESTServer\obj\Debug\netcoreapp2.2\RESTServer.RazorTargetAssemblyInfo.cache
 E:\Projekty\GitHub\RESTServer\RESTServer\obj\Debug\netcoreapp2.2\RESTServer.dll
 E:\Projekty\GitHub\RESTServer\RESTServer\obj\Debug\netcoreapp2.2\RESTServer.pdb
+E:\Projekty\GitHub\SERWER\RESTServer\RESTServer\bin\Debug\netcoreapp2.2\RESTServer.deps.json
+E:\Projekty\GitHub\SERWER\RESTServer\RESTServer\bin\Debug\netcoreapp2.2\RESTServer.runtimeconfig.json
+E:\Projekty\GitHub\SERWER\RESTServer\RESTServer\bin\Debug\netcoreapp2.2\RESTServer.runtimeconfig.dev.json
+E:\Projekty\GitHub\SERWER\RESTServer\RESTServer\bin\Debug\netcoreapp2.2\RESTServer.dll
+E:\Projekty\GitHub\SERWER\RESTServer\RESTServer\bin\Debug\netcoreapp2.2\RESTServer.pdb
+E:\Projekty\GitHub\SERWER\RESTServer\RESTServer\obj\Debug\netcoreapp2.2\RESTServer.csproj.CoreCompileInputs.cache
+E:\Projekty\GitHub\SERWER\RESTServer\RESTServer\obj\Debug\netcoreapp2.2\RESTServer.RazorAssemblyInfo.cache
+E:\Projekty\GitHub\SERWER\RESTServer\RESTServer\obj\Debug\netcoreapp2.2\RESTServer.RazorAssemblyInfo.cs
+E:\Projekty\GitHub\SERWER\RESTServer\RESTServer\obj\Debug\netcoreapp2.2\RESTServer.AssemblyInfoInputs.cache
+E:\Projekty\GitHub\SERWER\RESTServer\RESTServer\obj\Debug\netcoreapp2.2\RESTServer.AssemblyInfo.cs
+E:\Projekty\GitHub\SERWER\RESTServer\RESTServer\obj\Debug\netcoreapp2.2\RESTServer.RazorTargetAssemblyInfo.cache
+E:\Projekty\GitHub\SERWER\RESTServer\RESTServer\obj\Debug\netcoreapp2.2\RESTServer.dll
+E:\Projekty\GitHub\SERWER\RESTServer\RESTServer\obj\Debug\netcoreapp2.2\RESTServer.pdb
+E:\Projekty\GitHub\SERWER\RESTServer\RESTServer\obj\Debug\netcoreapp2.2\RESTServer.csprojAssemblyReference.cache
