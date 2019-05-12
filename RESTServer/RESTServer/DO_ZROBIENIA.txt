@@ -1,0 +1,9 @@
+﻿!!!!!!!!!!!! dodać Amount do Product, zrobić nowy kontroler dla produktu? i od nowa baza danych;
+
+- Resources wszystkiego poza Category;
+-- przerobienie ich kontrolerów;
+
+- ogarnąć czy to wgl będzie się sprawdzać;
+
+- wybadać komunikaty z kontrolerów przy złych/brakujących danych;
+

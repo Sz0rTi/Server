@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RESTServer.Data;
 using RESTServer.Models;
+using RESTServer.Resources;
 
 namespace RESTServer.Controllers
 {
@@ -15,38 +17,41 @@ namespace RESTServer.Controllers
     public class TaxStagesController : ControllerBase
     {
         private readonly MagazineContext _context;
+        private readonly IMapper _mapper;
 
-        public TaxStagesController(MagazineContext context)
+        public TaxStagesController(MagazineContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         // GET: api/TaxStages
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<TaxStage>>> GetTaxStages()
+        public async Task<IEnumerable<TaxStageResource>> GetTaxStages()
         {
-            return await _context.TaxStages.ToListAsync();
+            var taxstages = await _context.TaxStages.ToListAsync();
+            var resources = _mapper.Map<IEnumerable<TaxStage>, IEnumerable<TaxStageResource>>(taxstages);
+            return resources;
         }
 
         // GET: api/TaxStages/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<TaxStage>> GetTaxStage(long id)
+        public async Task<ActionResult<TaxStageResource>> GetTaxStage(int id)
         {
             var taxStage = await _context.TaxStages.FindAsync(id);
-
+            var response = _mapper.Map<TaxStageResource>(taxStage);
             if (taxStage == null)
             {
                 return NotFound();
             }
-
-            return taxStage;
+            return response;
         }
 
         // PUT: api/TaxStages/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutTaxStage(long id, TaxStage taxStage)
+        public async Task<IActionResult> PutTaxStage(int id, TaxStage taxStage)
         {
-            if (id != taxStage.TaxStageId)
+            if (id != taxStage.ID)
             {
                 return BadRequest();
             }
@@ -74,17 +79,18 @@ namespace RESTServer.Controllers
 
         // POST: api/TaxStages
         [HttpPost]
-        public async Task<ActionResult<TaxStage>> PostTaxStage(TaxStage taxStage)
+        public async Task<ActionResult<TaxStageResource>> PostTaxStage(TaxStage taxStage)
         {
             _context.TaxStages.Add(taxStage);
             await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetTaxStage", new { id = taxStage.TaxStageId }, taxStage);
+            var src = CreatedAtAction("GetTaxStage", new { id = taxStage.ID }, taxStage);
+            var response = _mapper.Map<TaxStageResource>(taxStage);
+            return response;
         }
 
         // DELETE: api/TaxStages/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<TaxStage>> DeleteTaxStage(long id)
+        public async Task<ActionResult<TaxStage>> DeleteTaxStage(int id)
         {
             var taxStage = await _context.TaxStages.FindAsync(id);
             if (taxStage == null)
@@ -98,9 +104,9 @@ namespace RESTServer.Controllers
             return taxStage;
         }
 
-        private bool TaxStageExists(long id)
+        private bool TaxStageExists(int id)
         {
-            return _context.TaxStages.Any(e => e.TaxStageId == id);
+            return _context.TaxStages.Any(e => e.ID == id);
         }
     }
 }

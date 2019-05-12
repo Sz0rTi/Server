@@ -13,6 +13,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.EntityFrameworkCore;
 using RESTServer.Models;
 using RESTServer.Data;
+using AutoMapper;
 
 namespace RESTServer
 {
@@ -38,6 +39,7 @@ namespace RESTServer
              * services.AddDbContext<MagazineContext>(opt => opt.UseInMemoryDatabase("MagazineList"));*/
 
             services.AddDbContext<MagazineContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("MagazineContext")));//z użyciem zewnętrznej (lokalnej) bazy danych
+            services.AddAutoMapper();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

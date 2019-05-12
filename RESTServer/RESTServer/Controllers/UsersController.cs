@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RESTServer.Data;
 using RESTServer.Models;
+using RESTServer.Resources;
 
 namespace RESTServer.Controllers
 {
@@ -15,38 +17,43 @@ namespace RESTServer.Controllers
     public class UsersController : ControllerBase
     {
         private readonly MagazineContext _context;
+        private readonly IMapper _mapper;
 
-        public UsersController(MagazineContext context)
+        public UsersController(MagazineContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         // GET: api/Users
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> GetUser()
+        public async Task<IEnumerable<UserResource>> GetUsers()
         {
-            return await _context.User.ToListAsync();
+            var users = await _context.Users.ToListAsync();
+            var resources = _mapper.Map<IEnumerable<User>, IEnumerable<UserResource>>(users);
+            return resources;
         }
 
         // GET: api/Users/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<User>> GetUser(long id)
+        public async Task<ActionResult<UserResource>> GetUser(int id)
         {
-            var user = await _context.User.FindAsync(id);
+            var user = await _context.Users.FindAsync(id);
+            var resource = _mapper.Map<UserResource>(user);
 
             if (user == null)
             {
                 return NotFound();
             }
 
-            return user;
+            return resource;
         }
 
         // PUT: api/Users/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutUser(long id, User user)
+        public async Task<IActionResult> PutUser(int id, User user)
         {
-            if (id != user.UserId)
+            if (id != user.ID)
             {
                 return BadRequest();
             }
@@ -74,33 +81,34 @@ namespace RESTServer.Controllers
 
         // POST: api/Users
         [HttpPost]
-        public async Task<ActionResult<User>> PostUser(User user)
+        public async Task<ActionResult<UserResource>> PostUser(User user)
         {
-            _context.User.Add(user);
+            _context.Users.Add(user);
             await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetUser", new { id = user.UserId }, user);
+            var src = CreatedAtAction("GetUser", new { id = user.ID }, user);
+            var response = _mapper.Map<UserResource>(user);
+            return response;
         }
 
         // DELETE: api/Users/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<User>> DeleteUser(long id)
+        public async Task<ActionResult<User>> DeleteUser(int id)
         {
-            var user = await _context.User.FindAsync(id);
+            var user = await _context.Users.FindAsync(id);
             if (user == null)
             {
                 return NotFound();
             }
 
-            _context.User.Remove(user);
+            _context.Users.Remove(user);
             await _context.SaveChangesAsync();
 
             return user;
         }
 
-        private bool UserExists(long id)
+        private bool UserExists(int id)
         {
-            return _context.User.Any(e => e.UserId == id);
+            return _context.Users.Any(e => e.ID == id);
         }
     }
 }

@@ -9,9 +9,9 @@ namespace RESTServer.Models
 {
     public class Category
     {
-        //[Key, ForeignKey("CategoryID")]
-        public long CategoryId { get; set; }
+        //[Key, ForeignKey("CategoryId")]
+        public int ID { get; set; }
         public string Name { get; set; }
-        public virtual List<Product> Products { get; set; }
+        public virtual ICollection<Product> Products { get; set; }
     }
 }

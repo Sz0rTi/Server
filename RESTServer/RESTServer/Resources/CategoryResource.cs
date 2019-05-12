@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace RESTServer.Models
+namespace RESTServer.Resources
 {
-    public class Unit
+    public class CategoryResource
     {
         public int ID { get; set; }
         public string Name { get; set; }
-        public virtual ICollection<Product> Products { get; set; }
     }
 }

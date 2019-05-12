@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RESTServer.Data;
 using RESTServer.Models;
+using RESTServer.Resources;
 
 namespace RESTServer.Controllers
 {
@@ -15,38 +17,43 @@ namespace RESTServer.Controllers
     public class InvoiceBuysController : ControllerBase
     {
         private readonly MagazineContext _context;
+        private readonly IMapper _mapper;
 
-        public InvoiceBuysController(MagazineContext context)
+        public InvoiceBuysController(MagazineContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         // GET: api/InvoiceBuys
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<InvoiceBuy>>> GetInvoicesBuy()
+        public async Task<IEnumerable<InvoiceBuyResource>> GetInvoicesBuy()
         {
-            return await _context.InvoicesBuy.ToListAsync();
+            var invoices = await _context.InvoicesBuy.ToListAsync();
+            var resources = _mapper.Map<IEnumerable<InvoiceBuy>, IEnumerable<InvoiceBuyResource>>(invoices);
+            return resources;
         }
 
         // GET: api/InvoiceBuys/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<InvoiceBuy>> GetInvoiceBuy(long id)
+        public async Task<ActionResult<InvoiceBuyResource>> GetInvoiceBuy(int id)
         {
             var invoiceBuy = await _context.InvoicesBuy.FindAsync(id);
+            var response = _mapper.Map<InvoiceBuyResource>(invoiceBuy);
 
             if (invoiceBuy == null)
             {
                 return NotFound();
             }
 
-            return invoiceBuy;
+            return response;
         }
 
         // PUT: api/InvoiceBuys/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutInvoiceBuy(long id, InvoiceBuy invoiceBuy)
+        public async Task<IActionResult> PutInvoiceBuy(int id, InvoiceBuy invoiceBuy)
         {
-            if (id != invoiceBuy.InvoiceBuyId)
+            if (id != invoiceBuy.ID)
             {
                 return BadRequest();
             }
@@ -74,26 +81,18 @@ namespace RESTServer.Controllers
 
         // POST: api/InvoiceBuys
         [HttpPost]
-        public async Task<ActionResult<InvoiceBuy>> PostInvoiceBuy(InvoiceBuy invoiceBuy)
+        public async Task<ActionResult<InvoiceBuyResource>> PostInvoiceBuy(InvoiceBuy invoiceBuy)
         {
-            double sumnetto = 0;
-            double sumbrutto = 0;
-            foreach (ProductBuy item in _context.ProductsBuy.Where(e => e.InvoiceBuyId == invoiceBuy.InvoiceBuyId))
-            {
-                sumnetto += item.PricePerItemNetto * item.Amount;
-                sumbrutto += item.PricePerItemBrutto * item.Amount;
-            }
-            invoiceBuy.PriceNetto = sumnetto;
-            invoiceBuy.PriceBrutto = sumbrutto;
             _context.InvoicesBuy.Add(invoiceBuy);
             await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetInvoiceBuy", new { id = invoiceBuy.InvoiceBuyId }, invoiceBuy);
+            var src = CreatedAtAction("GetInvoiceBuy", new { id = invoiceBuy.ID }, invoiceBuy);
+            var response = _mapper.Map<InvoiceBuyResource>(invoiceBuy);
+            return response;
         }
 
         // DELETE: api/InvoiceBuys/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<InvoiceBuy>> DeleteInvoiceBuy(long id)
+        public async Task<ActionResult<InvoiceBuy>> DeleteInvoiceBuy(int id)
         {
             var invoiceBuy = await _context.InvoicesBuy.FindAsync(id);
             if (invoiceBuy == null)
@@ -107,9 +106,9 @@ namespace RESTServer.Controllers
             return invoiceBuy;
         }
 
-        private bool InvoiceBuyExists(long id)
+        private bool InvoiceBuyExists(int id)
         {
-            return _context.InvoicesBuy.Any(e => e.InvoiceBuyId == id);
+            return _context.InvoicesBuy.Any(e => e.ID == id);
         }
     }
 }

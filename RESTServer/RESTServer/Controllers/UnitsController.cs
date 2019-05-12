@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RESTServer.Data;
 using RESTServer.Models;
+using RESTServer.Resources;
 
 namespace RESTServer.Controllers
 {
@@ -15,38 +17,42 @@ namespace RESTServer.Controllers
     public class UnitsController : ControllerBase
     {
         private readonly MagazineContext _context;
+        private readonly IMapper _mapper;
 
-        public UnitsController(MagazineContext context)
+        public UnitsController(MagazineContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         // GET: api/Units
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Unit>>> GetUnits()
+        public async Task<IEnumerable<UnitResource>> GetUnits()
         {
-            return await _context.Units.ToListAsync();
+            var units = await _context.Units.ToListAsync();
+            var resources = _mapper.Map<IEnumerable<Unit>, IEnumerable<UnitResource>>(units);
+            return resources;
         }
 
         // GET: api/Units/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Unit>> GetUnit(long id)
+        public async Task<ActionResult<UnitResource>> GetUnit(int id)
         {
             var unit = await _context.Units.FindAsync(id);
-
+            var response = _mapper.Map<UnitResource>(unit);
             if (unit == null)
             {
                 return NotFound();
             }
 
-            return unit;
+            return response;
         }
 
         // PUT: api/Units/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutUnit(long id, Unit unit)
+        public async Task<IActionResult> PutUnit(int id, Unit unit)
         {
-            if (id != unit.UnitId)
+            if (id != unit.ID)
             {
                 return BadRequest();
             }
@@ -74,17 +80,18 @@ namespace RESTServer.Controllers
 
         // POST: api/Units
         [HttpPost]
-        public async Task<ActionResult<Unit>> PostUnit(Unit unit)
+        public async Task<ActionResult<UnitResource>> PostUnit(Unit unit)
         {
             _context.Units.Add(unit);
             await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetUnit", new { id = unit.UnitId }, unit);
+            var src = CreatedAtAction("GetUnit", new { id = unit.ID }, unit);
+            var response = _mapper.Map<UnitResource>(unit);
+            return response;
         }
 
         // DELETE: api/Units/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Unit>> DeleteUnit(long id)
+        public async Task<ActionResult<Unit>> DeleteUnit(int id)
         {
             var unit = await _context.Units.FindAsync(id);
             if (unit == null)
@@ -98,9 +105,9 @@ namespace RESTServer.Controllers
             return unit;
         }
 
-        private bool UnitExists(long id)
+        private bool UnitExists(int id)
         {
-            return _context.Units.Any(e => e.UnitId == id);
+            return _context.Units.Any(e => e.ID == id);
         }
     }
 }

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace RESTServer.Models
+namespace RESTServer.Resources
 {
-    public class Seller
+    public class SellerResource
     {
         public int ID { get; set; }
         public string Name { get; set; }
@@ -13,6 +13,5 @@ namespace RESTServer.Models
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
         public string NIP { get; set; }
-        public virtual ICollection<InvoiceBuy> InvoicesBuy { get; set; }
     }
 }

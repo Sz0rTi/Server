@@ -32,9 +32,5 @@ namespace RESTServer.Data
         {
             base.OnModelCreating(builder);
         }
-
-        public DbSet<RESTServer.Models.Role> Role { get; set; }
-
-        public DbSet<RESTServer.Models.User> User { get; set; }
     }
 }

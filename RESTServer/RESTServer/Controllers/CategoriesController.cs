@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RESTServer.Data;
 using RESTServer.Models;
+using RESTServer.Resources;
 
 namespace RESTServer.Controllers
 {
@@ -15,22 +17,26 @@ namespace RESTServer.Controllers
     public class CategoriesController : ControllerBase
     {
         private readonly MagazineContext _context;
+        private readonly IMapper _mapper;
 
-        public CategoriesController(MagazineContext context)
+        public CategoriesController(MagazineContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         // GET: api/Categories
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Category>>> GetCategories()
+        public async Task<IEnumerable<CategoryResource>> GetCategories()
         {
-            return await _context.Categories.ToListAsync();
+            var categories = await _context.Categories.ToListAsync();
+            var resources = _mapper.Map<IEnumerable<Category>, IEnumerable<CategoryResource>> (categories);
+            return resources;
         }
 
         // GET: api/Categories/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Category>> GetCategory(long id)
+        public async Task<ActionResult<CategoryResource>> GetCategory(int id)
         {
             var category = await _context.Categories.FindAsync(id);
 
@@ -38,15 +44,15 @@ namespace RESTServer.Controllers
             {
                 return NotFound();
             }
-
-            return category;
+            var resource = _mapper.Map<CategoryResource> (category);
+            return resource;
         }
 
         // PUT: api/Categories/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCategory(long id, Category category)
+        public async Task<IActionResult> PutCategory(int id, Category category)
         {
-            if (id != category.CategoryId)
+            if (id != category.ID)
             {
                 return BadRequest();
             }
@@ -74,17 +80,18 @@ namespace RESTServer.Controllers
 
         // POST: api/Categories
         [HttpPost]
-        public async Task<ActionResult<Category>> PostCategory(Category category)
+        public async Task<ActionResult<CategoryResource>> PostCategory(Category category)
         {
             _context.Categories.Add(category);
             await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetCategory", new { id = category.CategoryId }, category);
+            var src = CreatedAtAction("GetCategory", new { id = category.ID }, category);
+            var response = _mapper.Map<CategoryResource>(category);
+            return response;
         }
 
         // DELETE: api/Categories/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Category>> DeleteCategory(long id)
+        public async Task<ActionResult<Category>> DeleteCategory(int id)
         {
             var category = await _context.Categories.FindAsync(id);
             if (category == null)
@@ -98,9 +105,9 @@ namespace RESTServer.Controllers
             return category;
         }
 
-        private bool CategoryExists(long id)
+        private bool CategoryExists(int id)
         {
-            return _context.Categories.Any(e => e.CategoryId == id);
+            return _context.Categories.Any(e => e.ID == id);
         }
     }
 }

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace RESTServer.Models
+namespace RESTServer.Resources
 {
-    public class InvoiceSell
+    public class InvoiceSellResource
     {
         public int ID { get; set; }
         public DateTime Date { get; set; }
@@ -14,8 +14,5 @@ namespace RESTServer.Models
         public double PriceBrutto { get; set; }
         public DateTime PaymentDeadline { get; set; }
         public bool IsPaid { get; set; }
-        public virtual ICollection<ProductSell> ProductsSell { get; set; }
-        public virtual Client Client { get; set; }
-        public virtual User User { get; set; }
     }
 }

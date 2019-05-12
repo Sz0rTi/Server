@@ -3,18 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace RESTServer.Models
+namespace RESTServer.Resources
 {
-    public class ProductBuy
+    public class ProductSellResource
     {
-
         public int ID { get; set; }
-        public int InvoiceBuyID { get; set; }
+        public int InvoiceSellID { get; set; }
         public int ProductID { get; set; }
         public int Amount { get; set; }
         public double PricePerItemNetto { get; set; }
         public double PricePerItemBrutto { get; set; }
-        public virtual Product Product { get; set; }
-        public virtual InvoiceBuy InvoiceBuy { get; set; }
+        public int TaxStageID { get; set; }
     }
 }

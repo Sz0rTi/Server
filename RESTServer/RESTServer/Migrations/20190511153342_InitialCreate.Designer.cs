@@ -10,7 +10,7 @@ using RESTServer.Data;
 namespace RESTServer.Migrations
 {
     [DbContext(typeof(MagazineContext))]
-    [Migration("20190507172352_InitialCreate")]
+    [Migration("20190511153342_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -23,20 +23,20 @@ namespace RESTServer.Migrations
 
             modelBuilder.Entity("RESTServer.Models.Category", b =>
                 {
-                    b.Property<long>("CategoryId")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Name");
 
-                    b.HasKey("CategoryId");
+                    b.HasKey("ID");
 
                     b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("RESTServer.Models.Client", b =>
                 {
-                    b.Property<long>("ClientId")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -48,14 +48,14 @@ namespace RESTServer.Migrations
 
                     b.Property<string>("Name");
 
-                    b.HasKey("ClientId");
+                    b.HasKey("ID");
 
                     b.ToTable("Clients");
                 });
 
             modelBuilder.Entity("RESTServer.Models.InvoiceBuy", b =>
                 {
-                    b.Property<long>("InvoiceBuyId")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -67,29 +67,28 @@ namespace RESTServer.Migrations
 
                     b.Property<double>("PriceNetto");
 
-                    b.Property<long>("SellerId");
+                    b.Property<int>("SellerID");
 
-                    b.Property<long?>("UserId");
+                    b.Property<int?>("UserID");
 
-                    b.HasKey("InvoiceBuyId");
+                    b.HasKey("ID");
 
-                    b.HasIndex("SellerId")
-                        .IsUnique();
+                    b.HasIndex("SellerID");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserID");
 
                     b.ToTable("InvoicesBuy");
                 });
 
             modelBuilder.Entity("RESTServer.Models.InvoiceSell", b =>
                 {
-                    b.Property<int>("InvoiceSellId")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("ClientId");
+                    b.Property<string>("ClientID");
 
-                    b.Property<long?>("ClientId1");
+                    b.Property<int?>("ClientID1");
 
                     b.Property<DateTime>("Date");
 
@@ -101,24 +100,26 @@ namespace RESTServer.Migrations
 
                     b.Property<double>("PriceNetto");
 
-                    b.Property<long?>("UserId");
+                    b.Property<int?>("UserID");
 
-                    b.HasKey("InvoiceSellId");
+                    b.HasKey("ID");
 
-                    b.HasIndex("ClientId1");
+                    b.HasIndex("ClientID1");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserID");
 
                     b.ToTable("InvoicesSell");
                 });
 
             modelBuilder.Entity("RESTServer.Models.Product", b =>
                 {
-                    b.Property<long>("ProductId")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<long>("CategoryId");
+                    b.Property<int>("Amount");
+
+                    b.Property<int>("CategoryID");
 
                     b.Property<string>("Description");
 
@@ -126,92 +127,89 @@ namespace RESTServer.Migrations
 
                     b.Property<double>("PriceNetto");
 
-                    b.Property<long>("TaxStageId");
+                    b.Property<int>("TaxStageID");
 
-                    b.Property<long>("UnitId");
+                    b.Property<int>("UnitID");
 
-                    b.HasKey("ProductId");
+                    b.HasKey("ID");
 
-                    b.HasIndex("CategoryId");
+                    b.HasIndex("CategoryID");
 
-                    b.HasIndex("TaxStageId");
+                    b.HasIndex("TaxStageID");
 
-                    b.HasIndex("UnitId")
-                        .IsUnique();
+                    b.HasIndex("UnitID");
 
                     b.ToTable("Products");
                 });
 
             modelBuilder.Entity("RESTServer.Models.ProductBuy", b =>
                 {
-                    b.Property<long>("ProductBuyId")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("Amount");
 
-                    b.Property<long>("InvoiceBuyId");
+                    b.Property<int>("InvoiceBuyID");
 
                     b.Property<double>("PricePerItemBrutto");
 
                     b.Property<double>("PricePerItemNetto");
 
-                    b.Property<long>("ProductId");
+                    b.Property<int>("ProductID");
 
-                    b.HasKey("ProductBuyId");
+                    b.HasKey("ID");
 
-                    b.HasIndex("InvoiceBuyId");
+                    b.HasIndex("InvoiceBuyID");
 
-                    b.HasIndex("ProductId");
+                    b.HasIndex("ProductID");
 
                     b.ToTable("ProductsBuy");
                 });
 
             modelBuilder.Entity("RESTServer.Models.ProductSell", b =>
                 {
-                    b.Property<long>("ProductSellId")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("Amount");
 
-                    b.Property<long>("InvoiceSellId");
-
-                    b.Property<int?>("InvoiceSellId1");
+                    b.Property<int>("InvoiceSellID");
 
                     b.Property<double>("PricePerItemBrutto");
 
                     b.Property<double>("PricePerItemNetto");
 
-                    b.Property<long>("ProductId");
+                    b.Property<int>("ProductID");
 
-                    b.Property<long>("TaxStageId");
+                    b.Property<int>("TaxStageID");
 
-                    b.HasKey("ProductSellId");
+                    b.HasKey("ID");
 
-                    b.HasIndex("InvoiceSellId1");
+                    b.HasIndex("InvoiceSellID");
 
-                    b.HasIndex("ProductId");
+                    b.HasIndex("ProductID");
 
                     b.ToTable("ProductsSell");
                 });
 
             modelBuilder.Entity("RESTServer.Models.Role", b =>
                 {
-                    b.Property<long>("RoleId")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Name");
 
-                    b.HasKey("RoleId");
+                    b.HasKey("ID");
 
-                    b.ToTable("Role");
+                    b.ToTable("Roles");
                 });
 
             modelBuilder.Entity("RESTServer.Models.Seller", b =>
                 {
-                    b.Property<long>("SellerId")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -225,40 +223,40 @@ namespace RESTServer.Migrations
 
                     b.Property<string>("PhoneNumber");
 
-                    b.HasKey("SellerId");
+                    b.HasKey("ID");
 
                     b.ToTable("Sellers");
                 });
 
             modelBuilder.Entity("RESTServer.Models.TaxStage", b =>
                 {
-                    b.Property<long>("TaxStageId")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<double>("Stage");
 
-                    b.HasKey("TaxStageId");
+                    b.HasKey("ID");
 
                     b.ToTable("TaxStages");
                 });
 
             modelBuilder.Entity("RESTServer.Models.Unit", b =>
                 {
-                    b.Property<long>("UnitId")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Name");
 
-                    b.HasKey("UnitId");
+                    b.HasKey("ID");
 
                     b.ToTable("Units");
                 });
 
             modelBuilder.Entity("RESTServer.Models.User", b =>
                 {
-                    b.Property<long>("UserId")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -266,87 +264,87 @@ namespace RESTServer.Migrations
 
                     b.Property<string>("Password");
 
-                    b.Property<long>("RoleId");
+                    b.Property<int>("RoleID");
 
-                    b.HasKey("UserId");
+                    b.HasKey("ID");
 
-                    b.HasIndex("RoleId")
-                        .IsUnique();
+                    b.HasIndex("RoleID");
 
-                    b.ToTable("User");
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("RESTServer.Models.InvoiceBuy", b =>
                 {
                     b.HasOne("RESTServer.Models.Seller", "Seller")
-                        .WithOne("InvoiceBuy")
-                        .HasForeignKey("RESTServer.Models.InvoiceBuy", "SellerId")
+                        .WithMany("InvoicesBuy")
+                        .HasForeignKey("SellerID")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("RESTServer.Models.User", "User")
                         .WithMany("InvoicesBuy")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserID");
                 });
 
             modelBuilder.Entity("RESTServer.Models.InvoiceSell", b =>
                 {
                     b.HasOne("RESTServer.Models.Client", "Client")
                         .WithMany("InvoicesSell")
-                        .HasForeignKey("ClientId1");
+                        .HasForeignKey("ClientID1");
 
                     b.HasOne("RESTServer.Models.User", "User")
                         .WithMany("InvoicesSell")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserID");
                 });
 
             modelBuilder.Entity("RESTServer.Models.Product", b =>
                 {
                     b.HasOne("RESTServer.Models.Category", "Category")
                         .WithMany("Products")
-                        .HasForeignKey("CategoryId")
+                        .HasForeignKey("CategoryID")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("RESTServer.Models.TaxStage", "TaxStage")
                         .WithMany("Product")
-                        .HasForeignKey("TaxStageId")
+                        .HasForeignKey("TaxStageID")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("RESTServer.Models.Unit", "Unit")
-                        .WithOne("Product")
-                        .HasForeignKey("RESTServer.Models.Product", "UnitId")
+                        .WithMany("Products")
+                        .HasForeignKey("UnitID")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("RESTServer.Models.ProductBuy", b =>
                 {
                     b.HasOne("RESTServer.Models.InvoiceBuy", "InvoiceBuy")
-                        .WithMany("Products")
-                        .HasForeignKey("InvoiceBuyId")
+                        .WithMany("ProductsBuy")
+                        .HasForeignKey("InvoiceBuyID")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("RESTServer.Models.Product", "Product")
                         .WithMany()
-                        .HasForeignKey("ProductId")
+                        .HasForeignKey("ProductID")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("RESTServer.Models.ProductSell", b =>
                 {
                     b.HasOne("RESTServer.Models.InvoiceSell", "InvoiceSell")
-                        .WithMany("Products")
-                        .HasForeignKey("InvoiceSellId1");
+                        .WithMany("ProductsSell")
+                        .HasForeignKey("InvoiceSellID")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("RESTServer.Models.Product", "Product")
                         .WithMany()
-                        .HasForeignKey("ProductId")
+                        .HasForeignKey("ProductID")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("RESTServer.Models.User", b =>
                 {
                     b.HasOne("RESTServer.Models.Role", "Role")
-                        .WithOne("User")
-                        .HasForeignKey("RESTServer.Models.User", "RoleId")
+                        .WithMany("Users")
+                        .HasForeignKey("RoleID")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

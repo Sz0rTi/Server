@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RESTServer.Data;
 using RESTServer.Models;
+using RESTServer.Resources;
 
 namespace RESTServer.Controllers
 {
@@ -15,38 +17,42 @@ namespace RESTServer.Controllers
     public class SellersController : ControllerBase
     {
         private readonly MagazineContext _context;
+        private readonly IMapper _mapper;
 
-        public SellersController(MagazineContext context)
+        public SellersController(MagazineContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         // GET: api/Sellers
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Seller>>> GetSellers()
+        public async Task<IEnumerable<SellerResource>> GetSellers()
         {
-            return await _context.Sellers.ToListAsync();
+            var sellers = await _context.Sellers.ToListAsync();
+            var resources = _mapper.Map<IEnumerable<Seller>, IEnumerable<SellerResource>>(sellers);
+            return resources;
         }
 
         // GET: api/Sellers/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Seller>> GetSeller(long id)
+        public async Task<ActionResult<SellerResource>> GetSeller(int id)
         {
             var seller = await _context.Sellers.FindAsync(id);
-
+            var response = _mapper.Map<SellerResource>(seller);
             if (seller == null)
             {
                 return NotFound();
             }
 
-            return seller;
+            return response;
         }
 
         // PUT: api/Sellers/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutSeller(long id, Seller seller)
+        public async Task<IActionResult> PutSeller(int id, Seller seller)
         {
-            if (id != seller.SellerId)
+            if (id != seller.ID)
             {
                 return BadRequest();
             }
@@ -74,17 +80,18 @@ namespace RESTServer.Controllers
 
         // POST: api/Sellers
         [HttpPost]
-        public async Task<ActionResult<Seller>> PostSeller(Seller seller)
+        public async Task<ActionResult<SellerResource>> PostSeller(Seller seller)
         {
             _context.Sellers.Add(seller);
             await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetSeller", new { id = seller.SellerId }, seller);
+            var src = CreatedAtAction("GetSeller", new { id = seller.ID }, seller);
+            var response = _mapper.Map<SellerResource>(seller);
+            return response;
         }
 
         // DELETE: api/Sellers/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Seller>> DeleteSeller(long id)
+        public async Task<ActionResult<Seller>> DeleteSeller(int id)
         {
             var seller = await _context.Sellers.FindAsync(id);
             if (seller == null)
@@ -98,9 +105,9 @@ namespace RESTServer.Controllers
             return seller;
         }
 
-        private bool SellerExists(long id)
+        private bool SellerExists(int id)
         {
-            return _context.Sellers.Any(e => e.SellerId == id);
+            return _context.Sellers.Any(e => e.ID == id);
         }
     }
 }
