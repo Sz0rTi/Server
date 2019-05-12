@@ -79,10 +79,10 @@ namespace RESTServer.Controllers
 
         // POST: api/Products
         [HttpPost]
-        public async Task<ActionResult<ProductResource>> PostProduct(ProductResource a)
+        public async Task<ActionResult<ProductResource>> PostProduct(Product a)
         {
             //_context.Products.Add(product);
-            Product item = new Product();
+            /*Product item = new Product();
             item.Amount = a.Amount;
             item.Name = a.Name;
             item.PriceNetto = a.PriceNetto;
@@ -93,8 +93,8 @@ namespace RESTServer.Controllers
             //item.ID = _context.Products.Max(e => e.ID) + 1;
             //item.Category = null;
             //item.Unit = null;
-            //item.TaxStage = null;
-            _context.Products.Add(item);
+            //item.TaxStage = null;*/
+            _context.Products.Add(a);
             await _context.SaveChangesAsync();
             //var src = 
             //var response = product;

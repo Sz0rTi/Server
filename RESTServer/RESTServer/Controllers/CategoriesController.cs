@@ -27,10 +27,10 @@ namespace RESTServer.Controllers
 
         // GET: api/Categories
         [HttpGet]
-        public async Task<IEnumerable<CategoryResource>> GetCategories()
+        public async Task<List<CategoryResource>> GetCategories()
         {
             var categories = await _context.Categories.ToListAsync();
-            var resources = _mapper.Map<IEnumerable<Category>, IEnumerable<CategoryResource>> (categories);
+            List<CategoryResource> resources = _mapper.Map<List<Category>, List<CategoryResource>> (categories);
             return resources;
         }
 
