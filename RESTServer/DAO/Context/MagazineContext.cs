@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using DAO.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using System;
+using System.Threading.Tasks;
 
 namespace DAO.Context
 {
@@ -19,6 +21,12 @@ namespace DAO.Context
         public DbSet<ProductBuy> ProductsBuy { get; set; }
         public DbSet<ProductSell> ProductsSell { get; set; }
         public DbSet<Seller> Sellers { get; set; }
+
+        public Task<object> FirstOrDefaultAsync()
+        {
+            throw new NotImplementedException();
+        }
+
         public DbSet<TaxStage> TaxStages { get; set; }
         public DbSet<Unit> Units { get; set; }
         public DbSet<User> Users { get; set; }

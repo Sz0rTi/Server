@@ -74,6 +74,80 @@
         }
       }
     },
+    "E:\\Projekty\\GitHub\\SERWER\\RESTServer\\Managment\\Managment.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "E:\\Projekty\\GitHub\\SERWER\\RESTServer\\Managment\\Managment.csproj",
+        "projectName": "Managment",
+        "projectPath": "E:\\Projekty\\GitHub\\SERWER\\RESTServer\\Managment\\Managment.csproj",
+        "packagesPath": "C:\\Users\\adafdfdsf\\.nuget\\packages\\",
+        "outputPath": "E:\\Projekty\\GitHub\\SERWER\\RESTServer\\Managment\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "F:\\Microsoft\\Xamarin\\NuGet\\",
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\adafdfdsf\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netstandard2.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netstandard2.0": {
+            "projectReferences": {
+              "E:\\Projekty\\GitHub\\SERWER\\RESTServer\\DAO\\DAO.csproj": {
+                "projectPath": "E:\\Projekty\\GitHub\\SERWER\\RESTServer\\DAO\\DAO.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netstandard2.0": {
+          "dependencies": {
+            "AutoMapper": {
+              "target": "Package",
+              "version": "[8.1.1, )"
+            },
+            "AutoMapper.Extensions.Microsoft.DependencyInjection": {
+              "target": "Package",
+              "version": "[6.1.1, )"
+            },
+            "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
+            "Microsoft.AspNetCore.Mvc": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
+            "NETStandard.Library": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.0.3, )",
+              "autoReferenced": true
+            }
+          },
+          "imports": [
+            "net461"
+          ],
+          "assetTargetFallback": true,
+          "warn": true
+        }
+      }
+    },
     "E:\\Projekty\\GitHub\\SERWER\\RESTServer\\RESTServer\\RESTServer.csproj": {
       "version": "1.0.0",
       "restore": {
@@ -104,6 +178,9 @@
             "projectReferences": {
               "E:\\Projekty\\GitHub\\SERWER\\RESTServer\\DAO\\DAO.csproj": {
                 "projectPath": "E:\\Projekty\\GitHub\\SERWER\\RESTServer\\DAO\\DAO.csproj"
+              },
+              "E:\\Projekty\\GitHub\\SERWER\\RESTServer\\Managment\\Managment.csproj": {
+                "projectPath": "E:\\Projekty\\GitHub\\SERWER\\RESTServer\\Managment\\Managment.csproj"
               }
             }
           }
@@ -119,7 +196,7 @@
           "dependencies": {
             "AutoMapper.Extensions.Microsoft.DependencyInjection": {
               "target": "Package",
-              "version": "[6.1.0, )"
+              "version": "[6.1.1, )"
             },
             "Microsoft.AspNetCore.App": {
               "suppressParent": "All",
@@ -145,6 +222,10 @@
             "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
               "target": "Package",
               "version": "[2.2.3, )"
+            },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[4.0.1, )"
             },
             "System.Linq": {
               "target": "Package",

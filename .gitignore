@@ -350,3 +350,8 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+
+RESTServer/bin
+RESTServer/obj
+RESTServer/obj/Debug/netcoreapp2.2
+RESTServer/bin/Debug/netcoreapp2.2

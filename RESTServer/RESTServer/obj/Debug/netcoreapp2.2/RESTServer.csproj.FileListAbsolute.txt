@@ -43,3 +43,5 @@ E:\Projekty\GitHub\SERWER\RESTServer\RESTServer\obj\Debug\netcoreapp2.2\RESTServ
 E:\Projekty\GitHub\SERWER\RESTServer\RESTServer\bin\Debug\netcoreapp2.2\DAO.dll
 E:\Projekty\GitHub\SERWER\RESTServer\RESTServer\bin\Debug\netcoreapp2.2\DAO.pdb
 E:\Projekty\GitHub\SERWER\RESTServer\RESTServer\obj\Debug\netcoreapp2.2\RESTServer.csproj.CopyComplete
+E:\Projekty\GitHub\SERWER\RESTServer\RESTServer\bin\Debug\netcoreapp2.2\Managment.dll
+E:\Projekty\GitHub\SERWER\RESTServer\RESTServer\bin\Debug\netcoreapp2.2\Managment.pdb
