@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using DAO.Context;
 using DAO.Models;
+using Managment.Models.Out;
+using Managment.Models.In;
+using Managment.Services;
 
 namespace Managment.Controllers
 {
@@ -14,36 +17,30 @@ namespace Managment.Controllers
     [ApiController]
     public class CategoriesController : ControllerBase
     {
-        private readonly MagazineContext _context;
+        //private readonly MagazineContext _context;
+        private readonly ICategoryService _service;
 
-        public CategoriesController(MagazineContext context)
+        public CategoriesController(ICategoryService service)
         {
-            _context = context;
+            _service = service;
         }
 
         // GET: api/Categories
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Category>>> GetCategories()
+        public async Task<ActionResult<List<CategoryOut>>> GetCategories()
         {
-            return await _context.Categories.ToListAsync();
+            return await _service.GetCategories();
         }
 
         // GET: api/Categories/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Category>> GetCategory(Guid id)
+        public async Task<ActionResult<CategoryOut>> GetCategory(Guid id)
         {
-            var category = await _context.Categories.FindAsync(id);
-
-            if (category == null)
-            {
-                return NotFound();
-            }
-
-            return category;
+            return await _service.GetCategory(id);
         }
 
         // PUT: api/Categories/5
-        [HttpPut("{id}")]
+        /*[HttpPut("{id}")]
         public async Task<IActionResult> PutCategory(Guid id, Category category)
         {
             if (id != category.ID)
@@ -70,37 +67,21 @@ namespace Managment.Controllers
             }
 
             return NoContent();
-        }
+        }*/
 
         // POST: api/Categories
         [HttpPost]
-        public async Task<ActionResult<Category>> PostCategory(Category category)
+        public async Task<ActionResult<CategoryOut>> PostCategory(CategoryIn category)
         {
-            _context.Categories.Add(category);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetCategory", new { id = category.ID }, category);
+            return await _service.PostCategory(category);
         }
 
         // DELETE: api/Categories/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Category>> DeleteCategory(Guid id)
+        public async Task<ActionResult<CategoryOut>> DeleteCategory(Guid id)
         {
-            var category = await _context.Categories.FindAsync(id);
-            if (category == null)
-            {
-                return NotFound();
-            }
-
-            _context.Categories.Remove(category);
-            await _context.SaveChangesAsync();
-
-            return category;
+            return await _service.DeleteCategory(id);
         }
 
-        private bool CategoryExists(Guid id)
-        {
-            return _context.Categories.Any(e => e.ID == id);
-        }
     }
 }
