@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using DAO.Context;
-using DAO.Models;
-using Managment.Services;
+﻿using Managment.Models.In;
 using Managment.Models.Out;
-using Managment.Models.In;
+using Managment.Services;
+using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Managment.Controllers
 {
