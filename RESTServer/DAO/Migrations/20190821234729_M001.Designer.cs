@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAO.Migrations
 {
     [DbContext(typeof(MagazineContext))]
-    [Migration("20190818165332_M001")]
+    [Migration("20190821234729_M001")]
     partial class M001
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -45,6 +45,8 @@ namespace DAO.Migrations
                     b.Property<string>("NIP");
 
                     b.Property<string>("Name");
+
+                    b.Property<string>("PhoneNumber");
 
                     b.HasKey("ID");
 
@@ -83,6 +85,8 @@ namespace DAO.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<Guid>("ClientID");
+
+                    b.Property<string>("Code");
 
                     b.Property<DateTime>("Date");
 
@@ -150,6 +154,8 @@ namespace DAO.Migrations
 
                     b.Property<Guid>("ProductID");
 
+                    b.Property<Guid>("TaxStageID");
+
                     b.HasKey("ID");
 
                     b.HasIndex("InvoiceBuyID");
@@ -174,7 +180,7 @@ namespace DAO.Migrations
 
                     b.Property<Guid>("ProductID");
 
-                    b.Property<int>("TaxStageID");
+                    b.Property<Guid>("TaxStageID");
 
                     b.HasKey("ID");
 

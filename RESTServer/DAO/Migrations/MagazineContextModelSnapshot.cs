@@ -44,6 +44,8 @@ namespace DAO.Migrations
 
                     b.Property<string>("Name");
 
+                    b.Property<string>("PhoneNumber");
+
                     b.HasKey("ID");
 
                     b.ToTable("Clients");
@@ -81,6 +83,8 @@ namespace DAO.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<Guid>("ClientID");
+
+                    b.Property<string>("Code");
 
                     b.Property<DateTime>("Date");
 
@@ -148,6 +152,8 @@ namespace DAO.Migrations
 
                     b.Property<Guid>("ProductID");
 
+                    b.Property<Guid>("TaxStageID");
+
                     b.HasKey("ID");
 
                     b.HasIndex("InvoiceBuyID");
@@ -172,7 +178,7 @@ namespace DAO.Migrations
 
                     b.Property<Guid>("ProductID");
 
-                    b.Property<int>("TaxStageID");
+                    b.Property<Guid>("TaxStageID");
 
                     b.HasKey("ID");
 

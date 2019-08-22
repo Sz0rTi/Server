@@ -67,6 +67,7 @@ namespace DAO.Migrations
                     Name = table.Column<string>(nullable: true),
                     Adress = table.Column<string>(nullable: true),
                     Mail = table.Column<string>(nullable: true),
+                    PhoneNumber = table.Column<string>(nullable: true),
                     NIP = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -324,6 +325,7 @@ namespace DAO.Migrations
                     ID = table.Column<Guid>(nullable: false),
                     Date = table.Column<DateTime>(nullable: false),
                     ClientID = table.Column<Guid>(nullable: false),
+                    Code = table.Column<string>(nullable: true),
                     PriceNetto = table.Column<double>(nullable: false),
                     PriceBrutto = table.Column<double>(nullable: false),
                     PaymentDeadline = table.Column<DateTime>(nullable: false),
@@ -356,7 +358,8 @@ namespace DAO.Migrations
                     ProductID = table.Column<Guid>(nullable: false),
                     Amount = table.Column<int>(nullable: false),
                     PricePerItemNetto = table.Column<double>(nullable: false),
-                    PricePerItemBrutto = table.Column<double>(nullable: false)
+                    PricePerItemBrutto = table.Column<double>(nullable: false),
+                    TaxStageID = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -385,7 +388,7 @@ namespace DAO.Migrations
                     Amount = table.Column<int>(nullable: false),
                     PricePerItemNetto = table.Column<double>(nullable: false),
                     PricePerItemBrutto = table.Column<double>(nullable: false),
-                    TaxStageID = table.Column<int>(nullable: false)
+                    TaxStageID = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {

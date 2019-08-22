@@ -1,8 +1,12 @@
 ﻿using AutoMapper;
 using DAO.Context;
+using DAO.Models;
+using Managment.Models.In;
 using Managment.Models.Out;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -18,38 +22,40 @@ namespace Managment.Services
             _context = context;
         }
 
-        public Task<InvoiceSellOut> GetInvoiceSell(Guid id)
+        public async Task<List<InvoiceSellOut>> GetInvoicesByClientID(Guid id)
         {
-            throw new NotImplementedException();
+            List<InvoiceSellOut> temp = _mapper.Map<List<InvoiceSellOut>>(await _context.InvoicesSell.Where(e => e.ClientID == id).OrderByDescending(e=>e.Date).ToListAsync());
+            return temp;
         }
 
-        public Task<List<InvoiceSellOut>> GetInvoiceSells()
+        public async Task<InvoiceSellOut> GetInvoiceSell(Guid id)
         {
-            throw new NotImplementedException();
+            InvoiceSellOut temp = _mapper.Map < InvoiceSellOut > (await _context.InvoicesSell.FirstOrDefaultAsync(e => e.ID == id));
+            //if(temp != null)
+            return temp;
         }
 
-        public Task<InvoiceSellOut> PostInvoiceSell()
+        public async Task<List<InvoiceSellOut>> GetInvoiceSells()
         {
-            throw new NotImplementedException();
+            List<InvoiceSellOut> temp = _mapper.Map<List<InvoiceSellOut>>(await _context.InvoicesSell.OrderByDescending(e => e.Date).ToListAsync());
+            return temp;
         }
 
-        public Task<List<InvoiceSellOut>> PostInvoiceSellsByDate()
+        public async Task<InvoiceSellOut> PostInvoiceSell(InvoiceSellIn invoice)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task<InvoiceSellOut> PutInvoiceSell(Guid id)
-        {
-            throw new NotImplementedException();
+            InvoiceSell temp = _mapper.Map<InvoiceSell>(invoice);
+            _context.InvoicesSell.Add(temp);
+            await _context.SaveChangesAsync();
+            return _mapper.Map<InvoiceSellOut>(temp);
         }
     }
 
     public interface IInvoiceSellService
     {
         Task<List<InvoiceSellOut>> GetInvoiceSells();
+        Task<List<InvoiceSellOut>> GetInvoicesByClientID(Guid id);
         Task<InvoiceSellOut> GetInvoiceSell(Guid id);
-        Task<InvoiceSellOut> PostInvoiceSell();
-        Task<InvoiceSellOut> PutInvoiceSell(Guid id);
-        Task<List<InvoiceSellOut>> PostInvoiceSellsByDate();
+        Task<InvoiceSellOut> PostInvoiceSell(InvoiceSellIn invoice);
+        //Task<InvoiceSellOut> PutInvoiceSell(Guid id);
     }
 }
