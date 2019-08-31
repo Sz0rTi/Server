@@ -38,6 +38,13 @@ namespace Managment.Services
             return temp;
         }
 
+        public async Task<UnitOut> GetUnitByProductId(Guid id)
+        {
+            Product product = _context.Products.First(e => e.ID == id);
+            UnitOut temp = _mapper.Map<UnitOut>(await _context.Units.Where(e => e.ID == product.UnitID).FirstAsync());
+            return temp;
+        }
+
         public async Task<List<UnitOut>> GetUnits()
         {
             List<UnitOut> temp = _mapper.Map<List<UnitOut>>(await _context.Units.ToListAsync());
@@ -59,5 +66,6 @@ namespace Managment.Services
         Task<List<UnitOut>> GetUnits();
         Task<UnitOut> PostUnit(UnitIn unit);
         Task<UnitOut> DeleteUnit(Guid id);
+        Task<UnitOut> GetUnitByProductId(Guid id);
     }
 }

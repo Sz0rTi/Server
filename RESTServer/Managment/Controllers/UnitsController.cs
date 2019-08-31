@@ -34,6 +34,12 @@ namespace Managment.Controllers
             return await _service.GetUnit(id);
         }
 
+        //GET: api/Units/ByProductId/5
+        [HttpGet("ByProductId/{id}")]
+        public async Task<ActionResult<UnitOut>> GetUnitByProductId(Guid id)
+        {
+            return await _service.GetUnitByProductId(id);
+        }
 
         // POST: api/Units
         [HttpPost]

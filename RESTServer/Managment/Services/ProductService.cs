@@ -25,7 +25,7 @@ namespace Managment.Services
 
         public async Task<ProductOut> GetProduct(Guid id)
         {
-            ProductOut temp = _mapper.Map<ProductOut>(_context.Products.FirstOrDefaultAsync(e => e.ID == id));
+            ProductOut temp = _mapper.Map<ProductOut>(await _context.Products.FirstOrDefaultAsync(e => e.ID == id));
             return temp;
         }
 
