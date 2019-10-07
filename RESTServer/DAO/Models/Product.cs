@@ -17,6 +17,8 @@ namespace DAO.Models
         public Guid TaxStageID { get; set; }
         public Guid UnitID { get; set; }
         public int Amount { get; set; }
+
+
         public virtual TaxStage TaxStage { get; set; }
         public virtual Category Category { get; set; }
         public virtual Unit Unit { get; set; }

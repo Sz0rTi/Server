@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using DAO.Context;
+using GUS;
 using Managment;
+using Managment.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -10,14 +12,20 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
 using Swashbuckle.AspNetCore.SwaggerUI;
+using System;
 
 namespace RESTServer
 {
     public class Startup
     {
+        public const string CROSS_ORGIN_POLICY_NAME = nameof(CROSS_ORGIN_POLICY_NAME);
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            GUSService gus = new GUSService();
+            //gus.GetInfo("8211022391");
+            Class1 x = new Class1();
+            x.info();
         }
 
         public IConfiguration Configuration { get; }
@@ -26,8 +34,8 @@ namespace RESTServer
         public void ConfigureServices(IServiceCollection services)
         {
             //services.AddDbContext<ToDoContext>(opt => opt.UseInMemoryDatabase("ToDoList"));
-            
-            
+
+            services.AddCors();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             /*
@@ -38,6 +46,23 @@ namespace RESTServer
                 .AddEntityFrameworkStores<MagazineContext>();
             services.AddManagment();
             services.AddAutoMapper();
+
+            #region CrossOrgin
+            services.AddCors(options =>
+            {
+                // TODO: W domyślnym srodowisku nie powinno się zezwalać na taką konfigurację. Naley także podać konkretną domenę.
+                options.AddPolicy(CROSS_ORGIN_POLICY_NAME,
+                    p => p.SetIsOriginAllowed(_ =>
+                    {
+                        return true;
+                    })
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .WithExposedHeaders("date")
+                    .AllowCredentials());
+            });
+            #endregion
+
             services.AddSwaggerGen(c =>
             {
                 //obj\Debug\netcoreapp2.2\PollsManagment.xml
@@ -75,10 +100,11 @@ namespace RESTServer
             else
             {
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
+                //app.UseHsts();
             }
+            app.UseCors(CROSS_ORGIN_POLICY_NAME);
             app.UseAuthentication();
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
             app.UseMvc();
             app.UseSwagger(c =>
             {

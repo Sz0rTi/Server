@@ -25,19 +25,19 @@ namespace Managment.Services
 
         public async Task<ProductOut> GetProduct(Guid id)
         {
-            ProductOut temp = _mapper.Map<ProductOut>(await _context.Products.FirstOrDefaultAsync(e => e.ID == id));
+            ProductOut temp = _mapper.Map<ProductOut>(await _context.Products.Include(e=>e.Category).Include(e=>e.TaxStage).Include(e=>e.Unit).FirstOrDefaultAsync(e => e.ID == id));
             return temp;
         }
 
         public async Task<List<ProductOut>> GetProducts()
         {
-            List<ProductOut> temp = _mapper.Map<List<ProductOut>>(await _context.Products.ToListAsync());
+            List<ProductOut> temp = _mapper.Map<List<ProductOut>>(await _context.Products.Include(e => e.Category).Include(e => e.TaxStage).Include(e => e.Unit).ToListAsync());
             return temp;
         }
 
         public async Task<List<ProductOut>> GetProductsByCategoryID(Guid id)
         {
-            List<ProductOut> temp = _mapper.Map<List<ProductOut>>(await _context.Products.Where(e=>e.CategoryID == id).ToListAsync());
+            List<ProductOut> temp = _mapper.Map<List<ProductOut>>(await _context.Products.Include(e => e.Category).Include(e => e.TaxStage).Include(e => e.Unit).Where(e=>e.CategoryID == id).ToListAsync());
             return temp;
         }
 

@@ -13,9 +13,9 @@ namespace Managment.Models.Out
         public string Name { get; set; }
         public double PriceNetto { get; set; }
         public string Description { get; set; }
-        public Guid CategoryID { get; set; }
-        public Guid TaxStageID { get; set; }
-        public Guid UnitID { get; set; }
+        public CategoryOut Category { get; set; }
+        public TaxStageOut TaxStage { get; set; }
+        public UnitOut Unit { get; set; }
         public int Amount { get; set; }
     }
 
@@ -24,6 +24,13 @@ namespace Managment.Models.Out
         public Product_To_ProductOut()
         {
             CreateMap<Product, ProductOut>();
+                /*.ForMember(e => e.Unit, e => e.MapFrom(m => m.Unit))
+                .ForMember(e => e.Category, e => e.MapFrom(m => m.Category))
+                .ForMember(e => e.TaxStage, e => e.MapFrom(m => m.Category));
+            CreateMap<Unit, UnitOut>();
+            CreateMap<Category, CategoryOut>();
+            CreateMap<TaxStage, TaxStageOut>();*/
+                
         }
     }
 }
