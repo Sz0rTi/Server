@@ -44,6 +44,7 @@ namespace Managment.Services
         public async Task<InvoiceSellOut> PostInvoiceSell(InvoiceSellIn invoice)
         {
             InvoiceSell temp = _mapper.Map<InvoiceSell>(invoice);
+            temp.Date = DateTime.Now;
             _context.InvoicesSell.Add(temp);
             await _context.SaveChangesAsync();
             return _mapper.Map<InvoiceSellOut>(temp);

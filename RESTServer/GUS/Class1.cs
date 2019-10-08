@@ -1,4 +1,6 @@
 ﻿using ServiceReference1;
+using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -39,7 +41,7 @@ namespace GUS
                 + "<soap:Body>"
                 + "<ns:DaneSzukajPodmioty>"
                 + "<ns:pParametryWyszukiwania>"
-                + "<dat:Nip>8211022391</dat:Nip>"
+                + "<dat:Nip>8211042391</dat:Nip>"
                 + "</ns:pParametryWyszukiwania>"
                 + "</ns:DaneSzukajPodmioty>"
                 + "</soap:Body>"
@@ -50,23 +52,24 @@ namespace GUS
             XmlTextWriter tx = new XmlTextWriter(sw);
             xml.WriteTo(tx);
             string str = sw.ToString();
-
             var byteData = Encoding.UTF8.GetBytes(str);
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://wyszukiwarkaregon.stat.gov.pl/wsBIR/UslugaBIRzewnPubl.svc");
             request.Method = "POST";
             request.ContentType = "application/soap+xml";
             request.Accept = "application/xop+xml";
-            //request.Headers.Clear();
             request.Headers.Add("sid", x.ZalogujResult);
             using (var stream = request.GetRequestStream())
             {
                 stream.Write(byteData, 0, byteData.Length);
             }
             HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-            var responseString = new StreamReader(response.GetResponseStream(), Encoding.UTF8).ReadToEnd();
+            response.Headers.Clear();
+            
+            string responseString = new StreamReader(response.GetResponseStream(), Encoding.UTF8).ReadToEnd();
+            var a = responseString.Substring(responseString.IndexOf("<s:Envelope", StringComparison.Ordinal));
+            a = a.Substring(0, 12+a.LastIndexOf("/s:Envelope>"));
             XmlDocument odp = new XmlDocument();
-
-            odp.LoadXml(z);
+            odp.LoadXml(a);
 
             WylogujRequest wylogujRequest = new WylogujRequest(x.ZalogujResult);
             WylogujResponse wylogujResponse = await client.WylogujAsync(wylogujRequest);

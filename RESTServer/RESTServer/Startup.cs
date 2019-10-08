@@ -22,10 +22,8 @@ namespace RESTServer
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-            GUSService gus = new GUSService();
-            //gus.GetInfo("8211022391");
-            Class1 x = new Class1();
-            x.info();
+            //Class1 x = new Class1();
+            //x.info();
         }
 
         public IConfiguration Configuration { get; }
