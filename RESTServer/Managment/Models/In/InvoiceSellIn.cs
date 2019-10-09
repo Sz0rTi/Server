@@ -13,7 +13,7 @@ namespace Managment.Models.In
         public double PriceBrutto { get; set; }
         public DateTime PaymentDeadline { get; set; }
         public bool IsPaid { get; set; }
-        public List<ProductSellIn> Products { get; set; }
+        public List<ProductSellIn> ProductsSell { get; set; }
     }
 
     public class InvoiceSellIn_To_InvoiceSell : Profile
@@ -23,7 +23,7 @@ namespace Managment.Models.In
             CreateMap<InvoiceSellIn, InvoiceSell>()
                 .ForMember(e => e.ID, e => e.Ignore())
                 .ForMember(e => e.Date, e => e.Ignore())
-                .ForMember(e => e.ProductsSell, e => e.Ignore())
+                //.ForMember(e => e.ProductsSell, e => e.Ignore())
                 .ForMember(e => e.Client, e => e.Ignore())
                 .ForMember(e => e.User, e => e.Ignore());
         }

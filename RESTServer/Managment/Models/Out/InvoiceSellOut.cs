@@ -16,6 +16,7 @@ namespace Managment.Models.Out
         public double PriceBrutto { get; set; }
         public DateTime PaymentDeadline { get; set; }
         public bool IsPaid { get; set; }
+        public List<ProductSellOut> ProductsSell { get; set; }
     }
 
     public class InvoiceSell_To_InvoiceSellOut : Profile
