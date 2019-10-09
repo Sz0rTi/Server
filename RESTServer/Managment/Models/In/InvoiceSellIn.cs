@@ -20,12 +20,12 @@ namespace Managment.Models.In
     {
         public InvoiceSellIn_To_InvoiceSell()
         {
-            CreateMap<InvoiceSellIn, InvoiceSell>()
-                .ForMember(e => e.ID, e => e.Ignore())
+            CreateMap<InvoiceSellIn, InvoiceSell>();
+                /*.ForMember(e => e.ID, e => e.Ignore())
                 .ForMember(e => e.Date, e => e.Ignore())
                 //.ForMember(e => e.ProductsSell, e => e.Ignore())
                 .ForMember(e => e.Client, e => e.Ignore())
-                .ForMember(e => e.User, e => e.Ignore());
+                .ForMember(e => e.User, e => e.Ignore());*/
         }
     }
 }

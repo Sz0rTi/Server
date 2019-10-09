@@ -21,11 +21,11 @@ namespace Managment.Models.In
     {
         public ProductIn_To_Product()
         {
-            CreateMap<ProductIn, Product>()
-                .ForMember(e => e.ID, e => e.Ignore())
+            CreateMap<ProductIn, Product>();
+                /*.ForMember(e => e.ID, e => e.Ignore())
                 .ForMember(e => e.TaxStage, e => e.Ignore())
                 .ForMember(e => e.Category, e => e.Ignore())
-                .ForMember(e => e.Unit, e => e.Ignore());
+                .ForMember(e => e.Unit, e => e.Ignore());*/
         }
     }
 }

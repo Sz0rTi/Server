@@ -41,6 +41,12 @@ namespace Managment.Services
             return temp;
         }
 
+        public async Task<TaxStageOut> GetTaxStageByProductId(Guid id)
+        {
+            TaxStageOut temp = _mapper.Map<TaxStageOut>(_context.TaxStages.Where(e => e.ID == _context.Products.Where(w => w.ID == id).First().TaxStageID));
+            return temp;
+        }
+
         public async Task<ProductOut> PostProduct(ProductIn product)
         {
             Product temp = _mapper.Map<Product>(product);
@@ -56,5 +62,6 @@ namespace Managment.Services
         Task<List<ProductOut>> GetProducts();
         Task<List<ProductOut>> GetProductsByCategoryID(Guid id);
         Task<ProductOut> PostProduct(ProductIn product);
+        Task<TaxStageOut> GetTaxStageByProductId(Guid id);
     }
 }

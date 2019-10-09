@@ -13,9 +13,9 @@ namespace Managment.Models.Out
         public string Name { get; set; }
         public double PriceNetto { get; set; }
         public string Description { get; set; }
-        public CategoryOut Category { get; set; }
-        public TaxStageOut TaxStage { get; set; }
-        public UnitOut Unit { get; set; }
+        public Guid CategoryID { get; set; }
+        public Guid TaxStageID { get; set; }
+        public Guid UnitID { get; set; }
         public int Amount { get; set; }
     }
 
