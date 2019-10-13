@@ -13,6 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
 using Swashbuckle.AspNetCore.SwaggerUI;
 using System;
+using System.Threading.Tasks;
 
 namespace RESTServer
 {
@@ -23,7 +24,6 @@ namespace RESTServer
         {
             Configuration = configuration;
             //Class1 x = new Class1();
-            //x.info();
         }
 
         public IConfiguration Configuration { get; }
