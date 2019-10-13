@@ -86,18 +86,27 @@ namespace GUS
             a = a.Replace(";&#xD;", "");
             a = a.Replace(";", "");
             a = a.Replace("\n", "");
+            a = a.Replace("&amp", "");
             a = a.Substring(a.IndexOf("<dane", StringComparison.Ordinal));
             a = a.Substring(0, 6 + a.LastIndexOf("/dane>"));
             XmlDocument odp = new XmlDocument();
             odp.LoadXml(a);
-            Company company = new Company();
-            company.Name = odp.GetElementsByTagName("Nazwa")[0].InnerText;
-            company.City = odp.GetElementsByTagName("Miejscowosc")[0].InnerText;
-            company.PostCode = odp.GetElementsByTagName("KodPocztowy")[0].InnerText;
-            company.Street = odp.GetElementsByTagName("Ulica")[0].InnerText;
-            company.Number = odp.GetElementsByTagName("NrNieruchomosci")[0].InnerText;
-            if (odp.GetElementsByTagName("NrLokalu")[0].Name != "") company.Number += "/" + odp.GetElementsByTagName("NrLokalu")[0].InnerText;
-            return company;
+            if(odp.GetElementsByTagName("ErrorCode").Count == 0)
+            {
+                Company company = new Company();
+                company.Name = odp.GetElementsByTagName("Nazwa")[0].InnerText;
+                company.City = odp.GetElementsByTagName("Miejscowosc")[0].InnerText;
+                company.PostCode = odp.GetElementsByTagName("KodPocztowy")[0].InnerText;
+                company.Street = odp.GetElementsByTagName("Ulica")[0].InnerText;
+                company.Number = odp.GetElementsByTagName("NrNieruchomosci")[0].InnerText;
+                company.NIP = odp.GetElementsByTagName("Nip")[0].InnerText;
+                if (odp.GetElementsByTagName("NrLokalu")[0].Name != "") company.Number += "/" + odp.GetElementsByTagName("NrLokalu")[0].InnerText;
+                return company;
+            }
+            else
+            {
+                return new Company();
+            }
         }
 
     }

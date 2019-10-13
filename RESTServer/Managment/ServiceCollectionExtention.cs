@@ -16,6 +16,7 @@ namespace Managment
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<ITaxStageService, TaxStageService>();
             services.AddScoped<IInvoiceSellService, InvoiceSellService>();
+            services.AddScoped<IGUSService, GUSService>();
         }
     }
 }
