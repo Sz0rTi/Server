@@ -12,5 +12,5 @@
 	drugiego dnia kupujemy towar x za cenę y,
 	NIE MOŻNA ZROBIĆ (x+y)/2! marża będzie inna;
 
-- 
+- zamienić PriceNetto w Product na listę zakupów (dla różnych cen), ogólnie przypał;
 

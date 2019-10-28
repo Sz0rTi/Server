@@ -80,6 +80,7 @@ namespace GUS
 
         public Company info2(string a)
         {
+            string b = string.Empty;
             a = a.Substring(0, 12 + a.LastIndexOf("/s:Envelope>"));
             a = a.Replace("&lt;", "<");
             a = a.Replace("&gt", ">");
@@ -87,6 +88,7 @@ namespace GUS
             a = a.Replace(";", "");
             a = a.Replace("\n", "");
             a = a.Replace("&amp", "");
+            a = a.Replace("SPÓŁKA Z OGRANICZONĄ ODPOWIEDZIALNOŚCIĄ", "SP. Z.O.O.");
             a = a.Substring(a.IndexOf("<dane", StringComparison.Ordinal));
             a = a.Substring(0, 6 + a.LastIndexOf("/dane>"));
             XmlDocument odp = new XmlDocument();
@@ -100,7 +102,7 @@ namespace GUS
                 company.Street = odp.GetElementsByTagName("Ulica")[0].InnerText;
                 company.Number = odp.GetElementsByTagName("NrNieruchomosci")[0].InnerText;
                 company.NIP = odp.GetElementsByTagName("Nip")[0].InnerText;
-                if (odp.GetElementsByTagName("NrLokalu")[0].Name != "") company.Number += "/" + odp.GetElementsByTagName("NrLokalu")[0].InnerText;
+                if (odp.GetElementsByTagName("NrLokalu")[0].Name != "null") company.Number += "/" + odp.GetElementsByTagName("NrLokalu")[0].InnerText;
                 return company;
             }
             else
