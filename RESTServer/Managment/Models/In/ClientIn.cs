@@ -9,11 +9,12 @@ namespace Managment.Models.In
     public class ClientIn
     {
         public string Name { get; set; }
-        public string Adress { get; set; }
-        public string Mail { get; set; }
-        public string PhoneNumber { get; set; }
+        public string PostCode { get; set; }
+        public string City { get; set; }
+        public string Street { get; set; }
+        public string Number { get; set; }
         public string NIP { get; set; }
-        List<InvoiceSell> Invoices = new List<InvoiceSell>();
+        //List<InvoiceSell> Invoices = new List<InvoiceSell>();
     }
 
     public class ClientIn_To_Client : Profile
