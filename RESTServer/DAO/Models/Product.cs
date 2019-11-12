@@ -22,5 +22,6 @@ namespace DAO.Models
         public virtual TaxStage TaxStage { get; set; }
         public virtual Category Category { get; set; }
         public virtual Unit Unit { get; set; }
+        //public virtual List<Purchase> Purchases { get; set; }
     }
 }
