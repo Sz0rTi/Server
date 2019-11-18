@@ -13,6 +13,7 @@ namespace Managment.Models.In
         public double PricePerItemNetto { get; set; }
         public double PricePerItemBrutto { get; set; }
         public Guid TaxStageID { get; set; }
+        public Guid UnitID { get; set; }
     }
 
     public class ProductSellIn_To_ProductSell : Profile
