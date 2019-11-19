@@ -31,7 +31,7 @@ namespace Managment.Services
         public async Task<InvoiceSellOut> GetInvoiceSell(Guid id)
         {
             InvoiceSellOut temp = _mapper.Map < InvoiceSellOut > (await _context.InvoicesSell.Include(e=>e.ProductsSell).FirstOrDefaultAsync(e => e.ID == id));
-            //if(temp != null)
+            if (temp == null) return null;
             return temp;
         }
 

@@ -35,6 +35,7 @@ namespace Managment.Services
         public async Task<ClientOut> GetClient(Guid id)
         {
             Client client = _context.Clients.FirstOrDefault(e => e.ID == id);
+            if (temp == null) return null;
             return _mapper.Map<ClientOut>(client);
         }
 

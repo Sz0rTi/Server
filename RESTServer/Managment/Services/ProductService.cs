@@ -26,6 +26,7 @@ namespace Managment.Services
         public async Task<ProductOut> GetProduct(Guid id)
         {
             ProductOut temp = _mapper.Map<ProductOut>(await _context.Products.Include(e=>e.Category).Include(e=>e.TaxStage).Include(e=>e.Unit).FirstOrDefaultAsync(e => e.ID == id));
+            if (temp == null) return null;
             return temp;
         }
 

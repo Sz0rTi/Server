@@ -35,6 +35,7 @@ namespace Managment.Services
         public async Task<UnitOut> GetUnit(Guid id)
         {
             UnitOut temp = _mapper.Map<UnitOut>(await _context.Units.FirstOrDefaultAsync());
+            if (temp == null) return null;
             return temp;
         }
 

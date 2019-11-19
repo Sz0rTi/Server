@@ -33,6 +33,7 @@ namespace Managment.Services
         public async Task<CategoryOut> GetCategory(Guid id)
         {
             CategoryOut temp = _mapper.Map<CategoryOut>(await _context.Categories.FirstOrDefaultAsync());
+            if (temp == null) return null;
             return temp;
         }
 
