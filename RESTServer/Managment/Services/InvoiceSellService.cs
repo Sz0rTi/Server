@@ -45,6 +45,18 @@ namespace Managment.Services
         {
             InvoiceSell temp = _mapper.Map<InvoiceSell>(invoice);
             temp.Date = DateTime.Now;
+            var tempList = _context.InvoicesSell.Where(i => i.Date.Month == temp.Date.Month).Select(i=>new { i.Name, i.Date });
+            if(tempList.Count() == 0)
+            {
+                temp.Code = $"1/{temp.Date.Month.ToString()}/{temp.Date.Year.ToString()}";
+            }
+            else
+            {
+                var tempInvoice = tempList.Last();
+                string[] tempString = tempInvoice.Name.Split('/');
+                temp.Code = $"{(int.Parse(tempString[0])+1).ToString()}/{temp.Date.Month.ToString()}/{temp.Date.Year.ToString()}";
+            }
+            temp.Name = $"{temp.Code} {_context.Clients.Where(c => c.ID == temp.ClientID).First().Name}";
             _context.InvoicesSell.Add(temp);
             await _context.SaveChangesAsync();
             return _mapper.Map<InvoiceSellOut>(temp);

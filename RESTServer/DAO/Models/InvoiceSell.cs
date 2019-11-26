@@ -8,6 +8,7 @@ namespace DAO.Models
     public class InvoiceSell
     {
         public Guid ID { get; set; }
+        public string Name { get; set; }
         public DateTime Date { get; set; }
         public Guid ClientID { get; set; }
         public string Code { get; set; }

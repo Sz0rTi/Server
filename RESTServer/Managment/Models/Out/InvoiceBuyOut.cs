@@ -10,6 +10,7 @@ namespace Managment.Models.Out
     public class InvoiceBuyOut
     {
         public Guid ID { get; set; }
+        public string Name { get; set; }
         public Guid SellerID { get; set; }
         public DateTime Date { get; set; }
         public double PriceNetto { get; set; }
