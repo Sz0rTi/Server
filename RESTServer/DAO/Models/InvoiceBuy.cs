@@ -9,13 +9,14 @@ namespace DAO.Models
     {
         public Guid ID { get; set; }
         public string Name { get; set; }
+        public string Code { get; set; }
         public Guid SellerID { get; set; }
         public DateTime Date { get; set; }
         public double PriceNetto { get; set; }
         public double PriceBrutto { get; set; }
         public bool IsPaid { get; set; }
         public virtual Seller Seller { get; set; }
-        public virtual ICollection<ProductBuy> ProductsBuy { get; set; }
+        public virtual List<ProductBuy> ProductsBuy { get; set; }
         public virtual User User { get; set; }
     }
 }

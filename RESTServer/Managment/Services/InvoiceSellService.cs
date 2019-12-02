@@ -57,6 +57,11 @@ namespace Managment.Services
                 temp.Code = $"{(int.Parse(tempString[0])+1).ToString()}/{temp.Date.Month.ToString()}/{temp.Date.Year.ToString()}";
             }
             temp.Name = $"{temp.Code} {_context.Clients.Where(c => c.ID == temp.ClientID).First().Name}";
+            foreach(var item in temp.ProductsSell)
+            {
+                var tempProduct = _context.Products.Where(p => p.ID == item.ProductID).First();
+                tempProduct.Amount -= item.Amount;
+            }
             _context.InvoicesSell.Add(temp);
             await _context.SaveChangesAsync();
             return _mapper.Map<InvoiceSellOut>(temp);

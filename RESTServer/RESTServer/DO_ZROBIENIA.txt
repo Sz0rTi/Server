@@ -14,3 +14,5 @@
 
 - zamienić PriceNetto w Product na listę zakupów (dla różnych cen), ogólnie przypał;
 
+- dodać kontroler i serwis dla SELLERS!!!
+

@@ -4,7 +4,6 @@ namespace DAO.Models
 {
     public class ProductSell
     {
-        //[Key, ForeignKey("Product,Invoice")]
         public Guid ID { get; set; }
         public Guid InvoiceSellID { get; set; }
         public Guid ProductID { get; set; }

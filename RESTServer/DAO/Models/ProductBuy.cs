@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace DAO.Models
 {
     public class ProductBuy
     {
-
         public Guid ID { get; set; }
         public Guid InvoiceBuyID { get; set; }
         public Guid ProductID { get; set; }
@@ -15,6 +11,7 @@ namespace DAO.Models
         public double PricePerItemNetto { get; set; }
         public double PricePerItemBrutto { get; set; }
         public Guid TaxStageID { get; set; }
+        public Guid UnitID { get; set; }
         public virtual Product Product { get; set; }
         public virtual InvoiceBuy InvoiceBuy { get; set; }
     }

@@ -34,7 +34,8 @@ namespace RESTServer
             //services.AddDbContext<ToDoContext>(opt => opt.UseInMemoryDatabase("ToDoList"));
 
             services.AddCors();
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
+                .AddJsonOptions(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
             /*
              * DO TESTÓW BEZ UŻYCIA ZEWNĘTRZNEJ BAZY DANYCH

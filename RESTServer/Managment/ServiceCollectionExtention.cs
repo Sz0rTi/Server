@@ -18,6 +18,8 @@ namespace Managment
             services.AddScoped<IInvoiceSellService, InvoiceSellService>();
             services.AddScoped<IGUSService, GUSService>();
             services.AddScoped<IClientService, ClientService>();
+            services.AddScoped<IInvoiceBuyService, InvoiceBuyService>();
+            services.AddScoped<ISellerService, SellerService>();
         }
     }
 }
