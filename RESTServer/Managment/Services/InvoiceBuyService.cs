@@ -29,7 +29,7 @@ namespace Managment.Services
 
         public async Task<InvoiceBuyOut> GetInvoiceBuy(Guid id)
         {
-            var temp = await _context.InvoicesBuy.Where(i => i.ID == id).FirstOrDefaultAsync();
+            var temp = await _context.InvoicesBuy.Where(i => i.ID == id).Include(p=>p.ProductsBuy).FirstOrDefaultAsync();
             if (temp == null) return null;
             else return _mapper.Map<InvoiceBuyOut>(temp);
         }

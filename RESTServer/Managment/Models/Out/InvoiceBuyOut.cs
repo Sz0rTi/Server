@@ -16,7 +16,7 @@ namespace Managment.Models.Out
         public double PriceNetto { get; set; }
         public double PriceBrutto { get; set; }
         public bool IsPaid { get; set; }
-        public List<ProductBuy> ProductsBuy { get; set; }
+        public List<ProductBuyOut> ProductsBuy { get; set; }
     }
 
     public class InvoiceBuy_To_InvoiceBuyOut : Profile
