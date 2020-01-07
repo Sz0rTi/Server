@@ -17,6 +17,7 @@ namespace DAO.Models
         public string Street { get; set; }
         public string Number { get; set; }
         public string NIP { get; set; }
+        public string UserID { get; set; }
         public virtual ICollection<InvoiceSell> InvoicesSell { get; set; }
     }
 }

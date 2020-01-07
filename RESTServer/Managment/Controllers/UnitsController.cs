@@ -1,6 +1,7 @@
 ﻿using Managment.Models.In;
 using Managment.Models.Out;
 using Managment.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -21,6 +22,7 @@ namespace Managment.Controllers
         }
 
         // GET: api/Units
+        //[Authorize(Roles = "Admin")]
         [HttpGet]
         public async Task<ActionResult<List<UnitOut>>> GetUnits()
         {

@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Managment", "Managment\Mana
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GUS", "GUS\GUS.csproj", "{A1A64F85-A20B-41D1-A191-98489932BC9A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PDF", "PDF\PDF.csproj", "{BF5C36D9-BFDC-428A-9521-B8CB5104A7A2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PDF", "PDF\PDF.csproj", "{BF5C36D9-BFDC-428A-9521-B8CB5104A7A2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

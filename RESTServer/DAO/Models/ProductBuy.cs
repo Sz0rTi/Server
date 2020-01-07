@@ -12,6 +12,7 @@ namespace DAO.Models
         public double PricePerItemBrutto { get; set; }
         public Guid TaxStageID { get; set; }
         public Guid UnitID { get; set; }
+        public string UserID { get; set; }
         public virtual Product Product { get; set; }
         public virtual InvoiceBuy InvoiceBuy { get; set; }
     }

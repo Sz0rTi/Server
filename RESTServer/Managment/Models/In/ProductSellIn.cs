@@ -12,6 +12,7 @@ namespace Managment.Models.In
         public int Amount { get; set; }
         public double PricePerItemNetto { get; set; }
         public double PricePerItemBrutto { get; set; }
+        public double BasePriceNetto { get; set; }
         public Guid TaxStageID { get; set; }
         public Guid UnitID { get; set; }
     }

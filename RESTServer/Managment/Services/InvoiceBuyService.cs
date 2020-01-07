@@ -3,6 +3,7 @@ using DAO.Context;
 using DAO.Models;
 using Managment.Models.In;
 using Managment.Models.Out;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -16,10 +17,15 @@ namespace Managment.Services
     {
         private IMapper _mapper;
         private MagazineContext _context;
-        public InvoiceBuyService(IMapper mapper, MagazineContext context)
+        private IHttpContextAccessor _accessor;
+        private string UserId { get; set; }
+
+        public InvoiceBuyService(IMapper mapper, MagazineContext context, IHttpContextAccessor accessor)
         {
             _mapper = mapper;
             _context = context;
+            _accessor = accessor;
+            //UserId = _context.Users.Where(u => u.UserName == _accessor.HttpContext.User.Identity.Name).First().Id;
         }
         public async Task<List<InvoiceBuyOut>> GetInvoicesBySellerID(Guid id)
         {
@@ -40,7 +46,7 @@ namespace Managment.Services
             return _mapper.Map<List<InvoiceBuyOut>>(temp);
         }
 
-        public async Task<InvoiceBuyOut> PostInvoiceBuy(InvoiceBuyIn invoice)
+        public async Task<InvoiceBuyOut> PostInvoiceBuy(InvoiceBuyIn invoice)//, string user)
         {
             InvoiceBuy temp = _mapper.Map<InvoiceBuy>(invoice);
             temp.Date = DateTime.Now;
@@ -70,6 +76,8 @@ namespace Managment.Services
                     tempProduct.Amount += item.Amount;
                 }
             }
+            //temp.UserID = _context.Users.Where(u => u.UserName == user).FirstOrDefault().Id;
+            temp.UserID = UserId;
             _context.InvoicesBuy.Add(temp);
             await _context.SaveChangesAsync();
             return _mapper.Map<InvoiceBuyOut>(temp);
@@ -81,6 +89,6 @@ namespace Managment.Services
         Task<List<InvoiceBuyOut>> GetInvoiceBuys();
         Task<List<InvoiceBuyOut>> GetInvoicesBySellerID(Guid id);
         Task<InvoiceBuyOut> GetInvoiceBuy(Guid id);
-        Task<InvoiceBuyOut> PostInvoiceBuy(InvoiceBuyIn invoice);
+        Task<InvoiceBuyOut> PostInvoiceBuy(InvoiceBuyIn invoice);//, string user);
     }
 }

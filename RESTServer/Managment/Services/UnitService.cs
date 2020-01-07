@@ -3,6 +3,7 @@ using DAO.Context;
 using DAO.Models;
 using Managment.Models.In;
 using Managment.Models.Out;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -17,11 +18,15 @@ namespace Managment.Services
     {
         private readonly IMapper _mapper;
         private readonly MagazineContext _context;
+        private IHttpContextAccessor _accessor;
+        private string UserId { get; set; }
 
-        public UnitService(IMapper mapper, MagazineContext context)
+        public UnitService(IMapper mapper, MagazineContext context, IHttpContextAccessor accessor)
         {
             _mapper = mapper;
             _context = context;
+            _accessor = accessor;
+            UserId = _context.Users.Where(u => u.UserName == _accessor.HttpContext.User.Identity.Name).First().Id;
         }
 
         public async Task<UnitOut> DeleteUnit(Guid id)
@@ -30,10 +35,12 @@ namespace Managment.Services
             if (temp != null) _context.Units.Remove(temp);
             await _context.SaveChangesAsync();
             return _mapper.Map<UnitOut>(temp);
+
+            
         }
 
         public async Task<UnitOut> GetUnit(Guid id)
-        {
+        { 
             UnitOut temp = _mapper.Map<UnitOut>(await _context.Units.FirstOrDefaultAsync());
             if (temp == null) return null;
             return temp;
@@ -48,13 +55,14 @@ namespace Managment.Services
 
         public async Task<List<UnitOut>> GetUnits()
         {
-            List<UnitOut> temp = _mapper.Map<List<UnitOut>>(await _context.Units.ToListAsync());
+            List<UnitOut> temp = _mapper.Map<List<UnitOut>>(await _context.Units.Where(e => e.UserID == UserId).ToListAsync());
             return temp;
         }
 
         public async Task<UnitOut> PostUnit(UnitIn unit)
         {
             Unit temp = _mapper.Map<Unit>(unit);
+            temp.UserID = UserId;
             _context.Units.Add(temp);
             await _context.SaveChangesAsync();
             return _mapper.Map<UnitOut>(temp);

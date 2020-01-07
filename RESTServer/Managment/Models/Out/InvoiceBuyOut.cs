@@ -16,6 +16,7 @@ namespace Managment.Models.Out
         public double PriceNetto { get; set; }
         public double PriceBrutto { get; set; }
         public bool IsPaid { get; set; }
+        public string UserID { get; set; }
         public List<ProductBuyOut> ProductsBuy { get; set; }
     }
 

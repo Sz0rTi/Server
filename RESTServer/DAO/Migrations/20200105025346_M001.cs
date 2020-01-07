@@ -65,9 +65,10 @@ namespace DAO.Migrations
                 {
                     ID = table.Column<Guid>(nullable: false),
                     Name = table.Column<string>(nullable: true),
-                    Adress = table.Column<string>(nullable: true),
-                    Mail = table.Column<string>(nullable: true),
-                    PhoneNumber = table.Column<string>(nullable: true),
+                    PostCode = table.Column<string>(nullable: true),
+                    City = table.Column<string>(nullable: true),
+                    Street = table.Column<string>(nullable: true),
+                    Number = table.Column<string>(nullable: true),
                     NIP = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -76,26 +77,15 @@ namespace DAO.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Roles",
-                columns: table => new
-                {
-                    ID = table.Column<Guid>(nullable: false),
-                    Name = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Roles", x => x.ID);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Sellers",
                 columns: table => new
                 {
                     ID = table.Column<Guid>(nullable: false),
                     Name = table.Column<string>(nullable: true),
-                    Address = table.Column<string>(nullable: true),
-                    Email = table.Column<string>(nullable: true),
-                    PhoneNumber = table.Column<string>(nullable: true),
+                    PostCode = table.Column<string>(nullable: true),
+                    City = table.Column<string>(nullable: true),
+                    Street = table.Column<string>(nullable: true),
+                    Number = table.Column<string>(nullable: true),
                     NIP = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -234,23 +224,66 @@ namespace DAO.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Users",
+                name: "InvoicesSell",
                 columns: table => new
                 {
                     ID = table.Column<Guid>(nullable: false),
-                    Login = table.Column<string>(nullable: true),
-                    Password = table.Column<string>(nullable: true),
-                    RoleID = table.Column<Guid>(nullable: false)
+                    Name = table.Column<string>(nullable: true),
+                    Date = table.Column<DateTime>(nullable: false),
+                    ClientID = table.Column<Guid>(nullable: false),
+                    Code = table.Column<string>(nullable: true),
+                    PriceNetto = table.Column<double>(nullable: false),
+                    PriceBrutto = table.Column<double>(nullable: false),
+                    PaymentDeadline = table.Column<DateTime>(nullable: false),
+                    IsPaid = table.Column<bool>(nullable: false),
+                    UserID = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Users", x => x.ID);
+                    table.PrimaryKey("PK_InvoicesSell", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_Users_Roles_RoleID",
-                        column: x => x.RoleID,
-                        principalTable: "Roles",
+                        name: "FK_InvoicesSell_Clients_ClientID",
+                        column: x => x.ClientID,
+                        principalTable: "Clients",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_InvoicesSell_AspNetUsers_UserID",
+                        column: x => x.UserID,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "InvoicesBuy",
+                columns: table => new
+                {
+                    ID = table.Column<Guid>(nullable: false),
+                    Name = table.Column<string>(nullable: true),
+                    Code = table.Column<string>(nullable: true),
+                    SellerID = table.Column<Guid>(nullable: false),
+                    Date = table.Column<DateTime>(nullable: false),
+                    PriceNetto = table.Column<double>(nullable: false),
+                    PriceBrutto = table.Column<double>(nullable: false),
+                    IsPaid = table.Column<bool>(nullable: false),
+                    UserID = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_InvoicesBuy", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_InvoicesBuy_Sellers_SellerID",
+                        column: x => x.SellerID,
+                        principalTable: "Sellers",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_InvoicesBuy_AspNetUsers_UserID",
+                        column: x => x.UserID,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -290,66 +323,6 @@ namespace DAO.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "InvoicesBuy",
-                columns: table => new
-                {
-                    ID = table.Column<Guid>(nullable: false),
-                    SellerID = table.Column<Guid>(nullable: false),
-                    Date = table.Column<DateTime>(nullable: false),
-                    PriceNetto = table.Column<double>(nullable: false),
-                    PriceBrutto = table.Column<double>(nullable: false),
-                    IsPaid = table.Column<bool>(nullable: false),
-                    UserID = table.Column<Guid>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_InvoicesBuy", x => x.ID);
-                    table.ForeignKey(
-                        name: "FK_InvoicesBuy_Sellers_SellerID",
-                        column: x => x.SellerID,
-                        principalTable: "Sellers",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_InvoicesBuy_Users_UserID",
-                        column: x => x.UserID,
-                        principalTable: "Users",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "InvoicesSell",
-                columns: table => new
-                {
-                    ID = table.Column<Guid>(nullable: false),
-                    Date = table.Column<DateTime>(nullable: false),
-                    ClientID = table.Column<Guid>(nullable: false),
-                    Code = table.Column<string>(nullable: true),
-                    PriceNetto = table.Column<double>(nullable: false),
-                    PriceBrutto = table.Column<double>(nullable: false),
-                    PaymentDeadline = table.Column<DateTime>(nullable: false),
-                    IsPaid = table.Column<bool>(nullable: false),
-                    UserID = table.Column<Guid>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_InvoicesSell", x => x.ID);
-                    table.ForeignKey(
-                        name: "FK_InvoicesSell_Clients_ClientID",
-                        column: x => x.ClientID,
-                        principalTable: "Clients",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_InvoicesSell_Users_UserID",
-                        column: x => x.UserID,
-                        principalTable: "Users",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "ProductsBuy",
                 columns: table => new
                 {
@@ -359,7 +332,8 @@ namespace DAO.Migrations
                     Amount = table.Column<int>(nullable: false),
                     PricePerItemNetto = table.Column<double>(nullable: false),
                     PricePerItemBrutto = table.Column<double>(nullable: false),
-                    TaxStageID = table.Column<Guid>(nullable: false)
+                    TaxStageID = table.Column<Guid>(nullable: false),
+                    UnitID = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -388,7 +362,9 @@ namespace DAO.Migrations
                     Amount = table.Column<int>(nullable: false),
                     PricePerItemNetto = table.Column<double>(nullable: false),
                     PricePerItemBrutto = table.Column<double>(nullable: false),
-                    TaxStageID = table.Column<Guid>(nullable: false)
+                    BasePriceNetto = table.Column<double>(nullable: false),
+                    TaxStageID = table.Column<Guid>(nullable: false),
+                    UnitID = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -406,6 +382,39 @@ namespace DAO.Migrations
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "Purchases",
+                columns: table => new
+                {
+                    ID = table.Column<Guid>(nullable: false),
+                    ProductID = table.Column<Guid>(nullable: false),
+                    Amount = table.Column<int>(nullable: false),
+                    PriceNetto = table.Column<double>(nullable: false),
+                    TaxStageID = table.Column<Guid>(nullable: false),
+                    UnitID = table.Column<Guid>(nullable: false),
+                    Date = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Purchases", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_Purchases_Products_ProductID",
+                        column: x => x.ProductID,
+                        principalTable: "Products",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[] { "98a462ad-f9c1-4789-95bb-a679541e81c7", "ff66004c-a465-45b0-a7bf-728368cad5ba", "User", "USER" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[] { "cf421bf7-4397-4fbc-9d1a-a5c443f70d72", "7c504467-c624-475c-9821-921bf8905931", "Admin", null });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -502,9 +511,9 @@ namespace DAO.Migrations
                 column: "ProductID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Users_RoleID",
-                table: "Users",
-                column: "RoleID");
+                name: "IX_Purchases_ProductID",
+                table: "Purchases",
+                column: "ProductID");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -531,10 +540,10 @@ namespace DAO.Migrations
                 name: "ProductsSell");
 
             migrationBuilder.DropTable(
-                name: "AspNetRoles");
+                name: "Purchases");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "InvoicesBuy");
@@ -552,7 +561,7 @@ namespace DAO.Migrations
                 name: "Clients");
 
             migrationBuilder.DropTable(
-                name: "Users");
+                name: "AspNetUsers");
 
             migrationBuilder.DropTable(
                 name: "Categories");
@@ -562,9 +571,6 @@ namespace DAO.Migrations
 
             migrationBuilder.DropTable(
                 name: "Units");
-
-            migrationBuilder.DropTable(
-                name: "Roles");
         }
     }
 }

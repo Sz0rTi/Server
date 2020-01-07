@@ -10,6 +10,7 @@ using DAO.Models;
 using Managment.Services;
 using Managment.Models.Out;
 using Managment.Models.In;
+using PDF;
 
 namespace Managment.Controllers
 {
@@ -18,10 +19,12 @@ namespace Managment.Controllers
     public class InvoiceBuysController : ControllerBase
     {
         private readonly IInvoiceBuyService _service;
+        private readonly IPDFService _pdf;
 
-        public InvoiceBuysController(IInvoiceBuyService service)
+        public InvoiceBuysController(IInvoiceBuyService service, IPDFService pdf)
         {
             _service = service;
+            _pdf = pdf;
         }
 
         // GET: api/InvoiceBuys
@@ -43,6 +46,12 @@ namespace Managment.Controllers
         public async Task<ActionResult<List<InvoiceBuyOut>>> GetInvoiceBuysBySellerID(Guid id)
         {
             return await _service.GetInvoicesBySellerID(id);
+        }
+
+        [HttpGet("pdf")]
+        public async Task<ActionResult<bool>> GetPDF()
+        {
+            return _pdf.CreateHTML();
         }
 
         // PUT: api/InvoiceBuys/5
@@ -79,7 +88,8 @@ namespace Managment.Controllers
         [HttpPost]
         public async Task<ActionResult<InvoiceBuyOut>> PostInvoiceBuy(InvoiceBuyIn invoiceBuy)
         {
-            return await _service.PostInvoiceBuy(invoiceBuy);
+            var user = User.Identity.Name;
+            return await _service.PostInvoiceBuy(invoiceBuy);//, user);
         }
 
         // DELETE: api/InvoiceBuys/5

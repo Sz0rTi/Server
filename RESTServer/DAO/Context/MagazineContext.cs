@@ -3,6 +3,7 @@ using DAO.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using System;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 
 namespace DAO.Context
 {
@@ -30,8 +31,6 @@ namespace DAO.Context
 
         public DbSet<TaxStage> TaxStages { get; set; }
         public DbSet<Unit> Units { get; set; }
-        public DbSet<User> Users { get; set; }
-        public DbSet<Role> Roles { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -40,6 +39,10 @@ namespace DAO.Context
                 .HasOne<Unit>(s => s.Unit)
                 .WithMany(g => g.Products)
                 .HasForeignKey(s => s.UnitID);
+
+            builder.Entity<IdentityRole>()
+                   .HasData(new IdentityRole { Name = "User", NormalizedName = "USER", Id = Guid.NewGuid().ToString(), ConcurrencyStamp = Guid.NewGuid().ToString() },
+                   new IdentityRole("Admin"));
         }
     }
 }

@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="pl"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <style>
+	.clearfix:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+a {
+  color: #5D6975;
+  text-decoration: underline;
+}
+
+body {
+  position: relative;
+  width: 21cm;  
+  height: 29.7cm; 
+  margin: 0 auto; 
+  color: #001028;
+  background: #FFFFFF; 
+  font-family: Arial, sans-serif; 
+  font-size: 12px; 
+  font-family: Arial;
+}
+
+header {
+  padding: 10px 0;
+  margin-bottom: 30px;
+}
+
+#logo {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+#logo img {
+  width: 90px;
+}
+
+h1 {
+  border-top: 1px solid  #5D6975;
+  border-bottom: 1px solid  #5D6975;
+  color: #5D6975;
+  font-size: 2.4em;
+  line-height: 1.4em;
+  font-weight: normal;
+  text-align: center;
+  margin: 0 0 20px 0;
+  background: url(dimension.png);
+}
+
+#client {
+  float: right;
+}
+
+#client span {
+  color: #5D6975;
+  text-align: right;
+  width: 52px;
+  margin-right: 10px;
+  display: inline-block;
+  font-size: 0.8em;
+}
+
+#company {
+  float: left;
+  text-align: left;
+}
+
+#client div{
+	padding-right: 60px;
+	white-space: nowrap;  
+}
+#company div {
+	padding-left: 30px;
+  white-space: nowrap;        
+}
+
+table {
+  width: 90%;
+  border-collapse: collapse;
+  border-spacing: 0;
+  margin-bottom: 5px;
+  border-style: solid;
+  border-width: 1px;
+}
+
+table th,
+table td {
+  text-align: center;
+}
+
+table th {
+
+  color: #5D6975;
+  border-bottom: 1px solid #C1CED9;
+  white-space: nowrap;        
+  font-weight: normal;
+  border-style: solid;
+  border-width: 1px;
+}
+
+table th.name{
+	width: 50%;
+}
+
+table .service,
+table .desc {
+  text-align: left;
+}
+
+table td {
+  padding: 5px;
+  text-align: right;
+  overflow-wrap: break-word;
+  border-style: solid;
+  border-width: 1px;
+}
+
+table td.service,
+table td.desc {
+  vertical-align: top;
+}
+
+table td.unit,
+table td.qty,
+table td.total {
+  font-size: 12px;
+}
+
+table td.grand {
+  border-top: 1px solid #5D6975;;
+}
+
+#notices .notice {
+  color: #5D6975;
+  font-size: 12px;
+}
+
+footer {
+  color: #5D6975;
+  width: 100%;
+  height: 30px;
+  position: absolute;
+  bottom: 0;
+  border-top: 1px solid #C1CED9;
+  padding: 8px 0;
+  text-align: center;
+}
+	</style>
+    <title>Example 1</title>
+    
+  </head>
+  <body>
+    <header class="clearfix">
+	<h1>INVOICE 3-2-1</h1>
+      <div id="company" class="clearfix">
+		<div>Sprzedawca:</div></br>
+        <div>"JACEX" JACEK FLISIUK</div>
+        <div>Unitów Podlaskich 11/53,<br> 08-110, Siedlce</div>
+        <div>NIP: 666666666</div>
+        <div><a href="mailto:company@example.com">company@example.com</a></div>
+      </div>
+      <div id="client">
+		<div>Nabywca:</div></br>
+        <div>John Doe</div>
+        <div>796 Silver Harbour, TX 79273, US</div>
+		<div>NIP: 1234567890</div>
+		</br>
+		<div>Data wystawienia: August 17, 2015</div>
+        <div>Termin płatności: September 17, 2015</div>
+		<div>Sposób zapłaty: Przelew 30dni</div>
+      </div>
+	  
+    </header>
+    <main>	    
+      <table align="center">
+        <thead>
+          <tr>
+			<th>L.p.</th>
+            <th class="desc">Nazwa produktu</th>
+            <th>Cena netto</th>
+            <th>Stawka VAT</th>
+			<th>Cena brutto</th>
+            <th>Ilość</th>
+			<th>J.M.</th>
+			<th>Wartość netto</th>
+			<th>Wartość brutto</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+			<td>1.</th>
+            <td class="desc">TITAN TRUCK PLUS 15W40aaaaaaaaaaaaaa aaaaaaaaaaaaa aaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaa</td>
+            <td>10,57zł</td>
+            <td>23%</td>
+            <td>13,45zł</td>
+			<td>20</td>
+			<td>Litr</td>
+			<td>211,40zł</td>
+			<td>269,00zł</td>
+          </tr>
+          <tr>
+			<td>2.</th>
+            <td class="desc">TITAN TRUCK PLUS 15W40</td>
+            <td>10,57zł</td>
+            <td>23%</td>
+            <td>13,45zł</td>
+			<td>20</td>
+			<td>Litr</td>
+			<td>211,40zł</td>
+			<td>269,00zł</td>
+          </tr>
+          <tr>
+			<td>3.</th>
+            <td class="desc">TITAN TRUCK PLUS 15W40</td>
+            <td>10,57zł</td>
+            <td>23%</td>
+            <td>13,45zł</td>
+			<td>20</td>
+			<td>Litr</td>
+			<td>211,40zł</td>
+			<td>269,00zł</td>
+          </tr>
+          <tr>
+			<td>4.</th>
+            <td class="desc">TITAN TRUCK PLUS 15W40</td>
+            <td>10,57zł</td>
+            <td>23%</td>
+            <td>13,45zł</td>
+			<td>20</td>
+			<td>Litr</td>
+			<td>211,40zł</td>
+			<td>269,00zł</td>
+          </tr>
+		  <tr>
+			<td>4.</th>
+            <td class="desc">TITAN TRUCK PLUS 15W40</td>
+            <td>10,57zł</td>
+            <td>23%</td>
+            <td>13,45zł</td>
+			<td>20</td>
+			<td>Litr</td>
+			<td>211,40zł</td>
+			<td>269,00zł</td>
+          </tr>
+		  <tr>
+			<td>4.</th>
+            <td class="desc">TITAN TRUCK PLUS 15W40</td>
+            <td>10,57zł</td>
+            <td>23%</td>
+            <td>13,45zł</td>
+			<td>20</td>
+			<td>Litr</td>
+			<td>211,40zł</td>
+			<td>269,00zł</td>
+          </tr>
+		  <tr>
+			<td>4.</th>
+            <td class="desc">TITAN TRUCK PLUS 15W40</td>
+            <td>10,57zł</td>
+            <td>23%</td>
+            <td>13,45zł</td>
+			<td>20</td>
+			<td>Litr</td>
+			<td>211,40zł</td>
+			<td>269,00zł</td>
+          </tr>
+		  <tr>
+			<td>4.</th>
+            <td class="desc">TITAN TRUCK PLUS 15W40</td>
+            <td>10,57zł</td>
+            <td>23%</td>
+            <td>13,45zł</td>
+			<td>20</td>
+			<td>Litr</td>
+			<td>211,40zł</td>
+			<td>269,00zł</td>
+          </tr>
+		  <tr>
+			<td>4.</th>
+            <td class="desc">TITAN TRUCK PLUS 15W40</td>
+            <td>10,57zł</td>
+            <td>23%</td>
+            <td>13,45zł</td>
+			<td>20</td>
+			<td>Litr</td>
+			<td>211,40zł</td>
+			<td>269,00zł</td>
+          </tr>
+		  <tr>
+			<td>4.</th>
+            <td class="desc">TITAN TRUCK PLUS 15W40</td>
+            <td>10,57zł</td>
+            <td>23%</td>
+            <td>13,45zł</td>
+			<td>20</td>
+			<td>Litr</td>
+			<td>211,40zł</td>
+			<td>269,00zł</td>
+          </tr>
+          <tr>
+            <td colspan="8">Suma netto</td>
+            <td class="total">$5,200.00</td>
+          </tr>
+          <tr>
+            <td colspan="8">Podatek</td>
+            <td class="total">$1,300.00</td>
+          </tr>
+          <tr>
+            <td colspan="8" class="grand total">GRAND TOTAL</td>
+            <td class="grand total">$6,500.00</td>
+          </tr>
+        </tbody>
+      </table>
+	  </br></br></br>
+	  <div style="overflow: hidden;">
+    <p style="float: left;padding-left: 100px;">wystawił: MarcinQ flasiak</p>
+    <p style="float: right;padding-right: 300px;">odebrał:</p>
+</div>
+	<div style="overflow: hidden;">
+	<p style="float: left;padding-left: 150px">podpis osoby upoważnionej</p>
+	<p style="float: right;padding-right: 150px">podpis osoby upoważnionej</p>
+	</div>
+    </main>
+    <footer>
+      Invoice was created on a computer and is valid without the signature and seal.
+    </footer>
+  
+</body></html>

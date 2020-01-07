@@ -3,6 +3,7 @@ using DAO.Context;
 using DAO.Models;
 using Managment.Models.In;
 using Managment.Models.Out;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -16,11 +17,15 @@ namespace Managment.Services
     {
         private readonly IMapper _mapper;
         private readonly MagazineContext _context;
+        private IHttpContextAccessor _accessor;
+        private string UserId { get; set; }
 
-        public ClientService(IMapper mapper, MagazineContext context)
+        public ClientService(IMapper mapper, MagazineContext context, IHttpContextAccessor accessor)
         {
             _mapper = mapper;
             _context = context;
+            _accessor = accessor;
+            UserId = _context.Users.Where(u => u.UserName == _accessor.HttpContext.User.Identity.Name).First().Id;
         }
 
         public async Task<bool> CheckClient(string nip)
@@ -41,13 +46,14 @@ namespace Managment.Services
 
         public async Task<List<ClientOut>> GetClients()
         {
-            List<ClientOut> temp = _mapper.Map<List<ClientOut>>(await _context.Clients.ToListAsync());
+            List<ClientOut> temp = _mapper.Map<List<ClientOut>>(await _context.Clients.Where(e => e.UserID == UserId).ToListAsync());
             return temp;
         }
 
         public async Task<ClientOut> PostClient(ClientIn client)
         {
             Client temp = _mapper.Map<Client>(client);
+            temp.UserID = UserId;
             _context.Clients.Add(temp);
             await _context.SaveChangesAsync();
             return _mapper.Map<ClientOut>(temp);

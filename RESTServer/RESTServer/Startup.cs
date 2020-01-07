@@ -3,6 +3,8 @@ using DAO.Context;
 using GUS;
 using Managment;
 using Managment.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -10,9 +12,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using PDF;
 using Swashbuckle.AspNetCore.Swagger;
 using Swashbuckle.AspNetCore.SwaggerUI;
 using System;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace RESTServer
@@ -42,8 +46,28 @@ namespace RESTServer
              * services.AddDbContext<MagazineContext>(opt => opt.UseInMemoryDatabase("MagazineList"));*/
             services.AddDbContext<MagazineContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("MagazineContext")));//z użyciem zewnętrznej (lokalnej) bazy danych
             services.AddIdentity<IdentityUser, IdentityRole>()
-                .AddEntityFrameworkStores<MagazineContext>();
+                .AddEntityFrameworkStores<MagazineContext>()
+                .AddDefaultTokenProviders();
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        ValidIssuer = Configuration["Issuer"],
+                        ValidAudience = Configuration["Audience"],
+                        IssuerSigningKey = new Microsoft.IdentityModel.Tokens.SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Key"]))
+                    };
+                });
             services.AddManagment();
+            services.AddScoped<IPDFService, PDFService>();
             services.AddAutoMapper();
 
             #region CrossOrgin
@@ -99,11 +123,13 @@ namespace RESTServer
             else
             {
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                //app.UseHsts();
+                app.UseHsts();
             }
             app.UseCors(CROSS_ORGIN_POLICY_NAME);
             app.UseAuthentication();
-            //app.UseHttpsRedirection();
+            //app.UseAuthorization();
+            app.UseStaticFiles();
+            app.UseHttpsRedirection();
             app.UseMvc();
             app.UseSwagger(c =>
             {

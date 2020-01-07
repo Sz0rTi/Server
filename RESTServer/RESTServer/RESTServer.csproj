@@ -27,6 +27,7 @@
     <ProjectReference Include="..\DAO\DAO.csproj" />
     <ProjectReference Include="..\GUS\GUS.csproj" />
     <ProjectReference Include="..\Managment\Managment.csproj" />
+    <ProjectReference Include="..\PDF\PDF.csproj" />
   </ItemGroup>
 
   <ItemGroup>

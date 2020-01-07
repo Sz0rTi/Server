@@ -3,6 +3,7 @@ using DAO.Context;
 using DAO.Models;
 using Managment.Models.In;
 using Managment.Models.Out;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -16,10 +17,15 @@ namespace Managment.Services
     {
         private IMapper _mapper;
         private MagazineContext _context;
-        public InvoiceSellService(IMapper mapper, MagazineContext context)
+        private IHttpContextAccessor _accessor;
+        private string UserId { get; set; }
+
+        public InvoiceSellService(IMapper mapper, MagazineContext context, IHttpContextAccessor accessor)
         {
             _mapper = mapper;
             _context = context;
+            _accessor = accessor;
+            UserId = _context.Users.Where(u => u.UserName == _accessor.HttpContext.User.Identity.Name).First().Id;
         }
 
         public async Task<List<InvoiceSellOut>> GetInvoicesByClientID(Guid id)
@@ -37,7 +43,7 @@ namespace Managment.Services
 
         public async Task<List<InvoiceSellOut>> GetInvoiceSells()
         {
-            List<InvoiceSellOut> temp = _mapper.Map<List<InvoiceSellOut>>(await _context.InvoicesSell.OrderByDescending(e => e.Date).ToListAsync());
+            List<InvoiceSellOut> temp = _mapper.Map<List<InvoiceSellOut>>(await _context.InvoicesSell.Where(e => e.UserID == UserId).OrderByDescending(e => e.Date).ToListAsync());
             return temp;
         }
 
@@ -62,6 +68,7 @@ namespace Managment.Services
                 var tempProduct = _context.Products.Where(p => p.ID == item.ProductID).First();
                 tempProduct.Amount -= item.Amount;
             }
+            temp.UserID = UserId;
             _context.InvoicesSell.Add(temp);
             await _context.SaveChangesAsync();
             return _mapper.Map<InvoiceSellOut>(temp);

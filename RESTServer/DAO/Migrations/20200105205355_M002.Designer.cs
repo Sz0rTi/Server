@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAO.Migrations
 {
     [DbContext(typeof(MagazineContext))]
-    [Migration("20191130023130_M006")]
-    partial class M006
+    [Migration("20200105205355_M002")]
+    partial class M002
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -27,6 +27,8 @@ namespace DAO.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("Name");
+
+                    b.Property<string>("UserID");
 
                     b.HasKey("ID");
 
@@ -49,6 +51,8 @@ namespace DAO.Migrations
                     b.Property<string>("PostCode");
 
                     b.Property<string>("Street");
+
+                    b.Property<string>("UserID");
 
                     b.HasKey("ID");
 
@@ -74,7 +78,7 @@ namespace DAO.Migrations
 
                     b.Property<Guid>("SellerID");
 
-                    b.Property<Guid?>("UserID");
+                    b.Property<string>("UserID");
 
                     b.HasKey("ID");
 
@@ -102,9 +106,11 @@ namespace DAO.Migrations
 
                     b.Property<DateTime>("PaymentDeadline");
 
+                    b.Property<double>("PriceBrutto");
+
                     b.Property<double>("PriceNetto");
 
-                    b.Property<Guid?>("UserID");
+                    b.Property<string>("UserID");
 
                     b.HasKey("ID");
 
@@ -133,6 +139,8 @@ namespace DAO.Migrations
                     b.Property<Guid>("TaxStageID");
 
                     b.Property<Guid>("UnitID");
+
+                    b.Property<string>("UserID");
 
                     b.HasKey("ID");
 
@@ -164,6 +172,8 @@ namespace DAO.Migrations
 
                     b.Property<Guid>("UnitID");
 
+                    b.Property<string>("UserID");
+
                     b.HasKey("ID");
 
                     b.HasIndex("InvoiceBuyID");
@@ -180,6 +190,8 @@ namespace DAO.Migrations
 
                     b.Property<int>("Amount");
 
+                    b.Property<double>("BasePriceNetto");
+
                     b.Property<Guid>("InvoiceSellID");
 
                     b.Property<double>("PricePerItemBrutto");
@@ -191,6 +203,8 @@ namespace DAO.Migrations
                     b.Property<Guid>("TaxStageID");
 
                     b.Property<Guid>("UnitID");
+
+                    b.Property<string>("UserID");
 
                     b.HasKey("ID");
 
@@ -225,18 +239,6 @@ namespace DAO.Migrations
                     b.ToTable("Purchases");
                 });
 
-            modelBuilder.Entity("DAO.Models.Role", b =>
-                {
-                    b.Property<Guid>("ID")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Name");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("Roles");
-                });
-
             modelBuilder.Entity("DAO.Models.Seller", b =>
                 {
                     b.Property<Guid>("ID")
@@ -254,6 +256,8 @@ namespace DAO.Migrations
 
                     b.Property<string>("Street");
 
+                    b.Property<string>("UserID");
+
                     b.HasKey("ID");
 
                     b.ToTable("Sellers");
@@ -265,6 +269,8 @@ namespace DAO.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<double>("Stage");
+
+                    b.Property<string>("UserID");
 
                     b.HasKey("ID");
 
@@ -278,27 +284,11 @@ namespace DAO.Migrations
 
                     b.Property<string>("Name");
 
+                    b.Property<string>("UserID");
+
                     b.HasKey("ID");
 
                     b.ToTable("Units");
-                });
-
-            modelBuilder.Entity("DAO.Models.User", b =>
-                {
-                    b.Property<Guid>("ID")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Login");
-
-                    b.Property<string>("Password");
-
-                    b.Property<Guid>("RoleID");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("RoleID");
-
-                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -323,6 +313,21 @@ namespace DAO.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "72339eb4-d747-428f-9023-581ec5120393",
+                            ConcurrencyStamp = "a3ffc78e-40bd-4bf2-aad6-926d479d05c7",
+                            Name = "User",
+                            NormalizedName = "USER"
+                        },
+                        new
+                        {
+                            Id = "51d26b9c-d6fc-4689-a4f0-6e20b5defd2e",
+                            ConcurrencyStamp = "c6014d92-ba6e-44a3-8f36-befa2e0a7cca",
+                            Name = "Admin"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -469,8 +474,8 @@ namespace DAO.Migrations
                         .HasForeignKey("SellerID")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("DAO.Models.User", "User")
-                        .WithMany("InvoicesBuy")
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
+                        .WithMany()
                         .HasForeignKey("UserID");
                 });
 
@@ -481,8 +486,8 @@ namespace DAO.Migrations
                         .HasForeignKey("ClientID")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("DAO.Models.User", "User")
-                        .WithMany("InvoicesSell")
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
+                        .WithMany()
                         .HasForeignKey("UserID");
                 });
 
@@ -535,14 +540,6 @@ namespace DAO.Migrations
                     b.HasOne("DAO.Models.Product", "Product")
                         .WithMany()
                         .HasForeignKey("ProductID")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("DAO.Models.User", b =>
-                {
-                    b.HasOne("DAO.Models.Role", "Role")
-                        .WithMany("Users")
-                        .HasForeignKey("RoleID")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

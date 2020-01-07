@@ -12,6 +12,7 @@ namespace DAO.Models
         //[Key, ForeignKey("CategoryId")]
         public Guid ID { get; set; }
         public string Name { get; set; }
+        public string UserID { get; set; }
         public virtual ICollection<Product> Products { get; set; }
     }
 }

@@ -12,6 +12,7 @@ namespace DAO.Models
         //[Key, ForeignKey("TaxStageID")]
         public Guid ID { get; set; }
         public double Stage { get; set; }
+        public string UserID { get; set; }
         public virtual List<Product> Product { get; set; }
     }
 }

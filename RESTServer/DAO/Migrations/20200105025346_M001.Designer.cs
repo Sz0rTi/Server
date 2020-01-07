@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAO.Migrations
 {
     [DbContext(typeof(MagazineContext))]
-    [Migration("20191126154152_M005")]
-    partial class M005
+    [Migration("20200105025346_M001")]
+    partial class M001
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -60,6 +60,8 @@ namespace DAO.Migrations
                     b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<string>("Code");
+
                     b.Property<DateTime>("Date");
 
                     b.Property<bool>("IsPaid");
@@ -72,7 +74,7 @@ namespace DAO.Migrations
 
                     b.Property<Guid>("SellerID");
 
-                    b.Property<Guid?>("UserID");
+                    b.Property<string>("UserID");
 
                     b.HasKey("ID");
 
@@ -100,9 +102,11 @@ namespace DAO.Migrations
 
                     b.Property<DateTime>("PaymentDeadline");
 
+                    b.Property<double>("PriceBrutto");
+
                     b.Property<double>("PriceNetto");
 
-                    b.Property<Guid?>("UserID");
+                    b.Property<string>("UserID");
 
                     b.HasKey("ID");
 
@@ -160,6 +164,8 @@ namespace DAO.Migrations
 
                     b.Property<Guid>("TaxStageID");
 
+                    b.Property<Guid>("UnitID");
+
                     b.HasKey("ID");
 
                     b.HasIndex("InvoiceBuyID");
@@ -175,6 +181,8 @@ namespace DAO.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<int>("Amount");
+
+                    b.Property<double>("BasePriceNetto");
 
                     b.Property<Guid>("InvoiceSellID");
 
@@ -221,32 +229,22 @@ namespace DAO.Migrations
                     b.ToTable("Purchases");
                 });
 
-            modelBuilder.Entity("DAO.Models.Role", b =>
-                {
-                    b.Property<Guid>("ID")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Name");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("Roles");
-                });
-
             modelBuilder.Entity("DAO.Models.Seller", b =>
                 {
                     b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Address");
-
-                    b.Property<string>("Email");
+                    b.Property<string>("City");
 
                     b.Property<string>("NIP");
 
                     b.Property<string>("Name");
 
-                    b.Property<string>("PhoneNumber");
+                    b.Property<string>("Number");
+
+                    b.Property<string>("PostCode");
+
+                    b.Property<string>("Street");
 
                     b.HasKey("ID");
 
@@ -277,24 +275,6 @@ namespace DAO.Migrations
                     b.ToTable("Units");
                 });
 
-            modelBuilder.Entity("DAO.Models.User", b =>
-                {
-                    b.Property<Guid>("ID")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Login");
-
-                    b.Property<string>("Password");
-
-                    b.Property<Guid>("RoleID");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("RoleID");
-
-                    b.ToTable("Users");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -317,6 +297,21 @@ namespace DAO.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "98a462ad-f9c1-4789-95bb-a679541e81c7",
+                            ConcurrencyStamp = "ff66004c-a465-45b0-a7bf-728368cad5ba",
+                            Name = "User",
+                            NormalizedName = "USER"
+                        },
+                        new
+                        {
+                            Id = "cf421bf7-4397-4fbc-9d1a-a5c443f70d72",
+                            ConcurrencyStamp = "7c504467-c624-475c-9821-921bf8905931",
+                            Name = "Admin"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -463,8 +458,8 @@ namespace DAO.Migrations
                         .HasForeignKey("SellerID")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("DAO.Models.User", "User")
-                        .WithMany("InvoicesBuy")
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
+                        .WithMany()
                         .HasForeignKey("UserID");
                 });
 
@@ -475,8 +470,8 @@ namespace DAO.Migrations
                         .HasForeignKey("ClientID")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("DAO.Models.User", "User")
-                        .WithMany("InvoicesSell")
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
+                        .WithMany()
                         .HasForeignKey("UserID");
                 });
 
@@ -529,14 +524,6 @@ namespace DAO.Migrations
                     b.HasOne("DAO.Models.Product", "Product")
                         .WithMany()
                         .HasForeignKey("ProductID")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("DAO.Models.User", b =>
-                {
-                    b.HasOne("DAO.Models.Role", "Role")
-                        .WithMany("Users")
-                        .HasForeignKey("RoleID")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

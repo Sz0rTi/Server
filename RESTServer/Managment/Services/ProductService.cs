@@ -3,6 +3,7 @@ using DAO.Context;
 using DAO.Models;
 using Managment.Models.In;
 using Managment.Models.Out;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -16,11 +17,15 @@ namespace Managment.Services
     {
         private readonly MagazineContext _context;
         private readonly IMapper _mapper;
+        private IHttpContextAccessor _accessor;
+        private string UserId { get; set; }
 
-        public ProductService(MagazineContext context, IMapper mapper)
+        public ProductService(MagazineContext context, IMapper mapper, IHttpContextAccessor accessor)
         {
             _context = context;
             _mapper = mapper;
+            _accessor = accessor;
+            UserId = _context.Users.Where(u => u.UserName == _accessor.HttpContext.User.Identity.Name).First().Id;
         }
 
         public async Task<ProductOut> GetProduct(Guid id)
@@ -32,13 +37,13 @@ namespace Managment.Services
 
         public async Task<List<ProductOut>> GetProducts()
         {
-            List<ProductOut> temp = _mapper.Map<List<ProductOut>>(await _context.Products.Include(e => e.Category).Include(e => e.TaxStage).Include(e => e.Unit).ToListAsync());
+            List<ProductOut> temp = _mapper.Map<List<ProductOut>>(await _context.Products.Where(e => e.UserID == UserId).Include(e => e.Category).Include(e => e.TaxStage).Include(e => e.Unit).ToListAsync());
             return temp;
         }
 
         public async Task<List<ProductOut>> GetProductsByCategoryID(Guid id)
         {
-            List<ProductOut> temp = _mapper.Map<List<ProductOut>>(await _context.Products.Include(e => e.Category).Include(e => e.TaxStage).Include(e => e.Unit).Where(e=>e.CategoryID == id).ToListAsync());
+            List<ProductOut> temp = _mapper.Map<List<ProductOut>>(await _context.Products.Where(e => e.UserID == UserId).Include(e => e.Category).Include(e => e.TaxStage).Include(e => e.Unit).Where(e=>e.CategoryID == id).ToListAsync());
             return temp;
         }
 
@@ -51,6 +56,7 @@ namespace Managment.Services
         public async Task<ProductOut> PostProduct(ProductIn product)
         {
             Product temp = _mapper.Map<Product>(product);
+            temp.UserID = UserId;
             _context.Products.Add(temp);
             await _context.SaveChangesAsync();
             return _mapper.Map<ProductOut>(temp);
