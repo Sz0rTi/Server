@@ -25,7 +25,7 @@ namespace Managment.Services
             _mapper = mapper;
             _context = context;
             _accessor = accessor;
-            //UserId = _context.Users.Where(u => u.UserName == _accessor.HttpContext.User.Identity.Name).First().Id;
+            UserId = _context.Users.Where(u => u.UserName == _accessor.HttpContext.User.Identity.Name).First().Id;
         }
         public async Task<List<InvoiceBuyOut>> GetInvoicesBySellerID(Guid id)
         {

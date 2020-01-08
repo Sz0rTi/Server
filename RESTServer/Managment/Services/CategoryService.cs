@@ -51,7 +51,7 @@ namespace Managment.Services
 
         public async Task<CategoryOut> PostCategory(CategoryIn category)
         {
-            if (_context.Categories.Any(c => c.Name == category.Name)) return null;
+            if (_context.Categories.Where(e => e.UserID == UserId).Any(c => c.Name == category.Name)) return null;
             else
             {
                 Category temp = _mapper.Map<Category>(category);
