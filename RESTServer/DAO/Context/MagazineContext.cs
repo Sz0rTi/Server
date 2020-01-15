@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace DAO.Context
 {
-    public class MagazineContext : IdentityDbContext
+    public class MagazineContext : IdentityDbContext<ApplicationUser>
     {
         public MagazineContext(DbContextOptions<MagazineContext> options)
             : base(options)

@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAO.Migrations
 {
     [DbContext(typeof(MagazineContext))]
-    [Migration("20200105025346_M001")]
+    [Migration("20200111202826_M001")]
     partial class M001
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -21,12 +21,75 @@ namespace DAO.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("DAO.Models.ApplicationUser", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("AccessFailedCount");
+
+                    b.Property<string>("Address");
+
+                    b.Property<string>("City");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken();
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(256);
+
+                    b.Property<bool>("EmailConfirmed");
+
+                    b.Property<bool>("LockoutEnabled");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd");
+
+                    b.Property<string>("NIP");
+
+                    b.Property<string>("Name");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("PasswordHash");
+
+                    b.Property<string>("PhoneNumber");
+
+                    b.Property<bool>("PhoneNumberConfirmed");
+
+                    b.Property<string>("PostCode");
+
+                    b.Property<string>("SecurityStamp");
+
+                    b.Property<bool>("TwoFactorEnabled");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(256);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedEmail")
+                        .HasName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.ToTable("AspNetUsers");
+                });
+
             modelBuilder.Entity("DAO.Models.Category", b =>
                 {
                     b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("Name");
+
+                    b.Property<string>("UserID");
 
                     b.HasKey("ID");
 
@@ -50,6 +113,8 @@ namespace DAO.Migrations
 
                     b.Property<string>("Street");
 
+                    b.Property<string>("UserID");
+
                     b.HasKey("ID");
 
                     b.ToTable("Clients");
@@ -67,6 +132,8 @@ namespace DAO.Migrations
                     b.Property<bool>("IsPaid");
 
                     b.Property<string>("Name");
+
+                    b.Property<DateTime>("PaymentDeadline");
 
                     b.Property<double>("PriceBrutto");
 
@@ -136,6 +203,8 @@ namespace DAO.Migrations
 
                     b.Property<Guid>("UnitID");
 
+                    b.Property<string>("UserID");
+
                     b.HasKey("ID");
 
                     b.HasIndex("CategoryID");
@@ -156,6 +225,8 @@ namespace DAO.Migrations
 
                     b.Property<Guid>("InvoiceBuyID");
 
+                    b.Property<string>("Name");
+
                     b.Property<double>("PricePerItemBrutto");
 
                     b.Property<double>("PricePerItemNetto");
@@ -165,6 +236,8 @@ namespace DAO.Migrations
                     b.Property<Guid>("TaxStageID");
 
                     b.Property<Guid>("UnitID");
+
+                    b.Property<string>("UserID");
 
                     b.HasKey("ID");
 
@@ -186,6 +259,8 @@ namespace DAO.Migrations
 
                     b.Property<Guid>("InvoiceSellID");
 
+                    b.Property<string>("Name");
+
                     b.Property<double>("PricePerItemBrutto");
 
                     b.Property<double>("PricePerItemNetto");
@@ -195,6 +270,8 @@ namespace DAO.Migrations
                     b.Property<Guid>("TaxStageID");
 
                     b.Property<Guid>("UnitID");
+
+                    b.Property<string>("UserID");
 
                     b.HasKey("ID");
 
@@ -246,6 +323,8 @@ namespace DAO.Migrations
 
                     b.Property<string>("Street");
 
+                    b.Property<string>("UserID");
+
                     b.HasKey("ID");
 
                     b.ToTable("Sellers");
@@ -258,6 +337,8 @@ namespace DAO.Migrations
 
                     b.Property<double>("Stage");
 
+                    b.Property<string>("UserID");
+
                     b.HasKey("ID");
 
                     b.ToTable("TaxStages");
@@ -269,6 +350,8 @@ namespace DAO.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("Name");
+
+                    b.Property<string>("UserID");
 
                     b.HasKey("ID");
 
@@ -301,15 +384,15 @@ namespace DAO.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "98a462ad-f9c1-4789-95bb-a679541e81c7",
-                            ConcurrencyStamp = "ff66004c-a465-45b0-a7bf-728368cad5ba",
+                            Id = "f2923fae-d455-439d-b786-973e3bfb89db",
+                            ConcurrencyStamp = "59c26316-9b0a-4409-b0d0-8ca894d11f45",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "cf421bf7-4397-4fbc-9d1a-a5c443f70d72",
-                            ConcurrencyStamp = "7c504467-c624-475c-9821-921bf8905931",
+                            Id = "7a0e358e-76f9-4f30-9e91-42b0befd3b66",
+                            ConcurrencyStamp = "cceed104-965f-41d3-b8fb-306fdf4cc95d",
                             Name = "Admin"
                         });
                 });
@@ -332,57 +415,6 @@ namespace DAO.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetRoleClaims");
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUser", b =>
-                {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("AccessFailedCount");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken();
-
-                    b.Property<string>("Email")
-                        .HasMaxLength(256);
-
-                    b.Property<bool>("EmailConfirmed");
-
-                    b.Property<bool>("LockoutEnabled");
-
-                    b.Property<DateTimeOffset?>("LockoutEnd");
-
-                    b.Property<string>("NormalizedEmail")
-                        .HasMaxLength(256);
-
-                    b.Property<string>("NormalizedUserName")
-                        .HasMaxLength(256);
-
-                    b.Property<string>("PasswordHash");
-
-                    b.Property<string>("PhoneNumber");
-
-                    b.Property<bool>("PhoneNumberConfirmed");
-
-                    b.Property<string>("SecurityStamp");
-
-                    b.Property<bool>("TwoFactorEnabled");
-
-                    b.Property<string>("UserName")
-                        .HasMaxLength(256);
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedEmail")
-                        .HasName("EmailIndex");
-
-                    b.HasIndex("NormalizedUserName")
-                        .IsUnique()
-                        .HasName("UserNameIndex")
-                        .HasFilter("[NormalizedUserName] IS NOT NULL");
-
-                    b.ToTable("AspNetUsers");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -458,7 +490,7 @@ namespace DAO.Migrations
                         .HasForeignKey("SellerID")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
+                    b.HasOne("DAO.Models.ApplicationUser", "User")
                         .WithMany()
                         .HasForeignKey("UserID");
                 });
@@ -470,7 +502,7 @@ namespace DAO.Migrations
                         .HasForeignKey("ClientID")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
+                    b.HasOne("DAO.Models.ApplicationUser", "User")
                         .WithMany()
                         .HasForeignKey("UserID");
                 });
@@ -537,7 +569,7 @@ namespace DAO.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser")
+                    b.HasOne("DAO.Models.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -545,7 +577,7 @@ namespace DAO.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser")
+                    b.HasOne("DAO.Models.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -558,7 +590,7 @@ namespace DAO.Migrations
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser")
+                    b.HasOne("DAO.Models.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -566,7 +598,7 @@ namespace DAO.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser")
+                    b.HasOne("DAO.Models.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);

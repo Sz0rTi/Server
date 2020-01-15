@@ -1,14 +1,12 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Managment.Models.In
+namespace DAO.Models
 {
-    public class RegisterModel
+    public class ApplicationUser : IdentityUser
     {
-        public string Email { get; set; }
-        public string Password { get; set; }
-        public string ConfirmPassword { get; set; }
         public string Name { get; set; }
         public string Address { get; set; }
         public string PostCode { get; set; }

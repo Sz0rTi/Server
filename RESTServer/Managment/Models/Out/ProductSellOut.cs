@@ -10,6 +10,7 @@ namespace Managment.Models.Out
     public class ProductSellOut
     {
         public Guid ID { get; set; }
+        public string Name { get; set; }
         public Guid InvoiceSellID { get; set; }
         public Guid ProductID { get; set; }
         public int Amount { get; set; }
@@ -17,6 +18,7 @@ namespace Managment.Models.Out
         public double PricePerItemBrutto { get; set; }
         public double BasePriceNetto { get; set; }
         public Guid TaxStageID { get; set; }
+        public Guid UnitID { get; set; }
     }
 
     public class ProductSell_To_ProductSellOut : Profile

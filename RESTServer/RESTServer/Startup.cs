@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using DAO.Context;
+using DAO.Models;
 using GUS;
 using Managment;
 using Managment.Services;
@@ -45,7 +46,7 @@ namespace RESTServer
              * DO TESTÓW BEZ UŻYCIA ZEWNĘTRZNEJ BAZY DANYCH
              * services.AddDbContext<MagazineContext>(opt => opt.UseInMemoryDatabase("MagazineList"));*/
             services.AddDbContext<MagazineContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("MagazineContext")));//z użyciem zewnętrznej (lokalnej) bazy danych
-            services.AddIdentity<IdentityUser, IdentityRole>()
+            services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<MagazineContext>()
                 .AddDefaultTokenProviders();
             services.AddAuthentication(options =>
@@ -67,7 +68,7 @@ namespace RESTServer
                     };
                 });
             services.AddManagment();
-            services.AddScoped<IPDFService, PDFService>();
+            //services.AddScoped<IPDFService, PDFService>();
             services.AddAutoMapper();
 
             #region CrossOrgin

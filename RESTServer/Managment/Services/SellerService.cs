@@ -30,7 +30,7 @@ namespace Managment.Services
 
         public async Task<bool> CheckSeller(string nip)
         {
-            if (_context.Sellers.FirstOrDefault(e => e.NIP == nip) == null)
+            if (_context.Sellers.Where(c => c.UserID == UserId).FirstOrDefault(e => e.NIP == nip) == null)
             {
                 return false;
             }
@@ -39,7 +39,7 @@ namespace Managment.Services
 
         public async Task<SellerOut> GetSeller(Guid id)
         {
-            Seller temp = _context.Sellers.FirstOrDefault(e => e.ID == id);
+            Seller temp = _context.Sellers.Where(c => c.UserID == UserId).FirstOrDefault(e => e.ID == id);
             if (temp == null) return null;
             return _mapper.Map<SellerOut>(temp);
         }

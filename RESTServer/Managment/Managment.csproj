@@ -7,7 +7,6 @@
   <ItemGroup>
     <ProjectReference Include="..\DAO\DAO.csproj" />
     <ProjectReference Include="..\GUS\GUS.csproj" />
-    <ProjectReference Include="..\PDF\PDF.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -18,7 +17,11 @@
     <PackageReference Include="ArcToCore.WsdlToCode" Version="1.0.0.3" />
     <PackageReference Include="AutoMapper" Version="8.1.1" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="6.1.1" />
+    <PackageReference Include="DocXToPdfConverter" Version="1.0.3" />
     <PackageReference Include="GusInfo" Version="0.1.1" />
+    <PackageReference Include="HtmlAgilityPack" Version="1.11.17" />
+    <PackageReference Include="HtmlRenderer.PdfSharp" Version="1.5.0.6" />
+    <PackageReference Include="IronPdf" Version="2020.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" />
     <PackageReference Include="NIP24.NIP24Client" Version="1.3.8" />

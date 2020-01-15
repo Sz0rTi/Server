@@ -13,6 +13,7 @@ namespace Managment.Models.In
         public double PriceNetto { get; set; }
         public double PriceBrutto { get; set; }
         public bool IsPaid { get; set; }
+        public string Code { get; set; }
         public List<ProductBuyIn> ProductsBuy { get; set; }
     }
 

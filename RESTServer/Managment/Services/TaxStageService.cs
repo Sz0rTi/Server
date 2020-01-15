@@ -38,7 +38,7 @@ namespace Managment.Services
 
         public async Task<TaxStageOut> GetTaxStage(Guid id)
         {
-            TaxStage temp2 = _context.TaxStages.Where(e=>e.ID == id).First();
+            TaxStage temp2 = _context.TaxStages.Where(c => c.UserID == UserId).Where(e=>e.ID == id).First();
             if (temp2 == null) return null;
             TaxStageOut temp = _mapper.Map<TaxStageOut>(temp2);
             return temp;

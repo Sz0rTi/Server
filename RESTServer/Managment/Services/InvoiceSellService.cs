@@ -3,6 +3,7 @@ using DAO.Context;
 using DAO.Models;
 using Managment.Models.In;
 using Managment.Models.Out;
+using Managment.Models.TwoWay;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -36,7 +37,7 @@ namespace Managment.Services
 
         public async Task<InvoiceSellOut> GetInvoiceSell(Guid id)
         {
-            InvoiceSellOut temp = _mapper.Map < InvoiceSellOut > (await _context.InvoicesSell.Include(e=>e.ProductsSell).FirstOrDefaultAsync(e => e.ID == id));
+            InvoiceSellOut temp = _mapper.Map < InvoiceSellOut > (await _context.InvoicesSell.Where(e => e.UserID == UserId).Include(e=>e.ProductsSell).FirstOrDefaultAsync(e => e.ID == id));
             if (temp == null) return null;
             return temp;
         }
@@ -47,11 +48,27 @@ namespace Managment.Services
             return temp;
         }
 
+        public async Task<InvoicesDate> GetMinDate()
+        {
+            InvoicesDate MinDate = new InvoicesDate();
+            try
+            {
+                var temp = (from d in _context.InvoicesSell.Where(i => i.UserID == UserId) select d.Date).Min();
+                MinDate.Month = temp.Month;
+                MinDate.Year = temp.Year;
+            }
+            catch (InvalidOperationException e)
+            {
+                return null;
+            }
+            return new InvoicesDate { Year = MinDate.Year, Month = MinDate.Month };
+        }
+
         public async Task<InvoiceSellOut> PostInvoiceSell(InvoiceSellIn invoice)
         {
             InvoiceSell temp = _mapper.Map<InvoiceSell>(invoice);
             temp.Date = DateTime.Now;
-            var tempList = _context.InvoicesSell.Where(i => i.Date.Month == temp.Date.Month).Select(i=>new { i.Name, i.Date });
+            var tempList = _context.InvoicesSell.Where(i => i.UserID == UserId).Where(i => i.Date.Month == temp.Date.Month).Select(i=>new { i.Name, i.Date });
             if(tempList.Count() == 0)
             {
                 temp.Code = $"1/{temp.Date.Month.ToString()}/{temp.Date.Year.ToString()}";
@@ -73,6 +90,13 @@ namespace Managment.Services
             await _context.SaveChangesAsync();
             return _mapper.Map<InvoiceSellOut>(temp);
         }
+
+        public async Task<List<InvoiceSell>> PostInvoicesByDate(InvoicesDate date)
+        {
+            var temp = _mapper.Map<List<InvoiceSell>>(await _context.InvoicesSell.Where(i => i.UserID == UserId)
+                .Where(i => i.Date.Year == date.Year && i.Date.Month == date.Month).ToListAsync());
+            return temp;
+        }
     }
 
     public interface IInvoiceSellService
@@ -81,6 +105,8 @@ namespace Managment.Services
         Task<List<InvoiceSellOut>> GetInvoicesByClientID(Guid id);
         Task<InvoiceSellOut> GetInvoiceSell(Guid id);
         Task<InvoiceSellOut> PostInvoiceSell(InvoiceSellIn invoice);
+        Task<List<InvoiceSell>> PostInvoicesByDate(InvoicesDate date);
+        Task<InvoicesDate> GetMinDate();
         //Task<InvoiceSellOut> PutInvoiceSell(Guid id);
     }
 }

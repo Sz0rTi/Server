@@ -20,6 +20,6 @@ namespace DAO.Models
         public string UserID { get; set; }
         public virtual List<ProductSell> ProductsSell { get; set; }
         public virtual Client Client { get; set; }
-        public virtual IdentityUser User { get; set; }
+        public virtual ApplicationUser User { get; set; }
     }
 }

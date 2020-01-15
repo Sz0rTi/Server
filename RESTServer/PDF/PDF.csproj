@@ -5,16 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AngleSharp" Version="0.13.0" />
-    <PackageReference Include="DinkToPdf" Version="1.0.8" />
     <PackageReference Include="HtmlAgilityPack" Version="1.11.17" />
-    <PackageReference Include="HtmlRenderer.PdfSharp" Version="1.5.0.6" />
-    <PackageReference Include="IronPdf" Version="2019.8.9" />
-    <PackageReference Include="iTextSharp" Version="5.5.13.1" />
-    <PackageReference Include="itextsharp.xmlworker" Version="5.5.13.1" />
-    <PackageReference Include="NReco.PdfGenerator" Version="1.1.15" />
     <PackageReference Include="Selenium.WebDriver" Version="3.141.0" />
     <PackageReference Include="Selenium.WebDriver.ChromeDriver" Version="80.0.3987.1600-beta" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Managment\Managment.csproj" />
   </ItemGroup>
 
 </Project>

@@ -10,6 +10,7 @@ using DAO.Models;
 using Managment.Services;
 using Managment.Models.Out;
 using Managment.Models.In;
+using Managment.Models.TwoWay;
 
 namespace Managment.Controllers
 {
@@ -18,10 +19,12 @@ namespace Managment.Controllers
     public class InvoiceSellsController : ControllerBase
     {
         private readonly IInvoiceSellService _service;
+        private readonly IPDFService _pdf;
 
-        public InvoiceSellsController(IInvoiceSellService service)
+        public InvoiceSellsController(IInvoiceSellService service, IPDFService pdf)
         {
             _service = service;
+            _pdf = pdf;
         }
 
         // GET: api/InvoiceSells
@@ -45,6 +48,17 @@ namespace Managment.Controllers
             return await _service.GetInvoicesByClientID(id);
         }
 
+        [HttpGet("min")]
+        public async Task<ActionResult<InvoicesDate>> GetMinDate()
+        {
+            return await _service.GetMinDate();
+        }
+
+        [HttpGet("pdf/{id}")]
+        public async Task<ActionResult<bool>> GetPDF(Guid id)
+        {
+            return await _pdf.CreateHTML(id);
+        }
         // PUT: api/InvoiceSells/5
         /*[HttpPut("{id}")]
         public async Task<IActionResult> PutInvoiceSell(Guid id, InvoiceSell invoiceSell)
@@ -80,6 +94,12 @@ namespace Managment.Controllers
         public async Task<ActionResult<InvoiceSellOut>> PostInvoiceSell(InvoiceSellIn invoiceSell)
         {
             return await _service.PostInvoiceSell(invoiceSell);
+        }
+
+        [HttpPost("bydate")]
+        public async Task<ActionResult<List<InvoiceSell>>> PostInvoicesByDate(InvoicesDate date)
+        {
+            return await _service.PostInvoicesByDate(date);
         }
 
         // DELETE: api/InvoiceSells/5

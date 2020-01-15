@@ -40,7 +40,12 @@ namespace DAO.Migrations
                     TwoFactorEnabled = table.Column<bool>(nullable: false),
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
-                    AccessFailedCount = table.Column<int>(nullable: false)
+                    AccessFailedCount = table.Column<int>(nullable: false),
+                    Name = table.Column<string>(nullable: true),
+                    Address = table.Column<string>(nullable: true),
+                    PostCode = table.Column<string>(nullable: true),
+                    City = table.Column<string>(nullable: true),
+                    NIP = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -52,7 +57,8 @@ namespace DAO.Migrations
                 columns: table => new
                 {
                     ID = table.Column<Guid>(nullable: false),
-                    Name = table.Column<string>(nullable: true)
+                    Name = table.Column<string>(nullable: true),
+                    UserID = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -69,7 +75,8 @@ namespace DAO.Migrations
                     City = table.Column<string>(nullable: true),
                     Street = table.Column<string>(nullable: true),
                     Number = table.Column<string>(nullable: true),
-                    NIP = table.Column<string>(nullable: true)
+                    NIP = table.Column<string>(nullable: true),
+                    UserID = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -86,7 +93,8 @@ namespace DAO.Migrations
                     City = table.Column<string>(nullable: true),
                     Street = table.Column<string>(nullable: true),
                     Number = table.Column<string>(nullable: true),
-                    NIP = table.Column<string>(nullable: true)
+                    NIP = table.Column<string>(nullable: true),
+                    UserID = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -98,7 +106,8 @@ namespace DAO.Migrations
                 columns: table => new
                 {
                     ID = table.Column<Guid>(nullable: false),
-                    Stage = table.Column<double>(nullable: false)
+                    Stage = table.Column<double>(nullable: false),
+                    UserID = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -110,7 +119,8 @@ namespace DAO.Migrations
                 columns: table => new
                 {
                     ID = table.Column<Guid>(nullable: false),
-                    Name = table.Column<string>(nullable: true)
+                    Name = table.Column<string>(nullable: true),
+                    UserID = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -264,6 +274,7 @@ namespace DAO.Migrations
                     Code = table.Column<string>(nullable: true),
                     SellerID = table.Column<Guid>(nullable: false),
                     Date = table.Column<DateTime>(nullable: false),
+                    PaymentDeadline = table.Column<DateTime>(nullable: false),
                     PriceNetto = table.Column<double>(nullable: false),
                     PriceBrutto = table.Column<double>(nullable: false),
                     IsPaid = table.Column<bool>(nullable: false),
@@ -297,7 +308,8 @@ namespace DAO.Migrations
                     CategoryID = table.Column<Guid>(nullable: false),
                     TaxStageID = table.Column<Guid>(nullable: false),
                     UnitID = table.Column<Guid>(nullable: false),
-                    Amount = table.Column<int>(nullable: false)
+                    Amount = table.Column<int>(nullable: false),
+                    UserID = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -329,11 +341,13 @@ namespace DAO.Migrations
                     ID = table.Column<Guid>(nullable: false),
                     InvoiceBuyID = table.Column<Guid>(nullable: false),
                     ProductID = table.Column<Guid>(nullable: false),
+                    Name = table.Column<string>(nullable: true),
                     Amount = table.Column<int>(nullable: false),
                     PricePerItemNetto = table.Column<double>(nullable: false),
                     PricePerItemBrutto = table.Column<double>(nullable: false),
                     TaxStageID = table.Column<Guid>(nullable: false),
-                    UnitID = table.Column<Guid>(nullable: false)
+                    UnitID = table.Column<Guid>(nullable: false),
+                    UserID = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -359,12 +373,14 @@ namespace DAO.Migrations
                     ID = table.Column<Guid>(nullable: false),
                     InvoiceSellID = table.Column<Guid>(nullable: false),
                     ProductID = table.Column<Guid>(nullable: false),
+                    Name = table.Column<string>(nullable: true),
                     Amount = table.Column<int>(nullable: false),
                     PricePerItemNetto = table.Column<double>(nullable: false),
                     PricePerItemBrutto = table.Column<double>(nullable: false),
                     BasePriceNetto = table.Column<double>(nullable: false),
                     TaxStageID = table.Column<Guid>(nullable: false),
-                    UnitID = table.Column<Guid>(nullable: false)
+                    UnitID = table.Column<Guid>(nullable: false),
+                    UserID = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -409,12 +425,12 @@ namespace DAO.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "98a462ad-f9c1-4789-95bb-a679541e81c7", "ff66004c-a465-45b0-a7bf-728368cad5ba", "User", "USER" });
+                values: new object[] { "f2923fae-d455-439d-b786-973e3bfb89db", "59c26316-9b0a-4409-b0d0-8ca894d11f45", "User", "USER" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "cf421bf7-4397-4fbc-9d1a-a5c443f70d72", "7c504467-c624-475c-9821-921bf8905931", "Admin", null });
+                values: new object[] { "7a0e358e-76f9-4f30-9e91-42b0befd3b66", "cceed104-965f-41d3-b8fb-306fdf4cc95d", "Admin", null });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",

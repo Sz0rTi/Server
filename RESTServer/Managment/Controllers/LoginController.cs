@@ -21,9 +21,9 @@ namespace Managment.Controllers
     {
         //private readonly MagazineContext _context;
         private readonly IConfiguration _service;
-        private readonly SignInManager<IdentityUser> _manager;
+        private readonly SignInManager<ApplicationUser> _manager;
 
-        public LoginController(IConfiguration service, SignInManager<IdentityUser> manager)
+        public LoginController(IConfiguration service, SignInManager<ApplicationUser> manager)
         {
             _service = service;
             _manager = manager;
@@ -64,11 +64,20 @@ namespace Managment.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> PostRegister(RegisterModel model)
         {
-            IdentityUser user = new IdentityUser(model.Email);
+            ApplicationUser user = new ApplicationUser();
             if (model.Password == model.ConfirmPassword)
-            {
+            {               
+                user.UserName = user.Email = model.Email;
+                user.Address = model.Address;
+                user.PostCode = model.PostCode;
+                user.City = model.City;
+                user.NIP = model.NIP;
+                user.Name = model.Name;
                 await _manager.UserManager.CreateAsync(user, model.Password);
+                
+                
                 await _manager.UserManager.AddToRoleAsync(user, "User");
+                //await _manager.UserManager.UpdateAsync(user);
                 return Ok(new RegisterResult { Successful = true, Errors = new List<string>() });
             }
             else

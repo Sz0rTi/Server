@@ -30,7 +30,7 @@ namespace Managment.Services
 
         public async Task<bool> CheckClient(string nip)
         {
-            if (_context.Clients.FirstOrDefault(e => e.NIP == nip) == null)
+            if (_context.Clients.Where(c=>c.UserID == UserId).FirstOrDefault(e => e.NIP == nip) == null)
             {
                 return false;
             }
@@ -39,7 +39,7 @@ namespace Managment.Services
 
         public async Task<ClientOut> GetClient(Guid id)
         {
-            Client temp = _context.Clients.FirstOrDefault(e => e.ID == id);
+            Client temp = _context.Clients.Where(c => c.UserID == UserId).FirstOrDefault(e => e.ID == id);
             if (temp == null) return null;
             return _mapper.Map<ClientOut>(temp);
         }
