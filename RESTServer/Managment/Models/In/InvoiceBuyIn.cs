@@ -10,6 +10,7 @@ namespace Managment.Models.In
     {
         public Guid SellerID { get; set; }
         public DateTime PaymentDeadline { get; set; }
+        public Guid PaymentMethodID { get; set; }
         public double PriceNetto { get; set; }
         public double PriceBrutto { get; set; }
         public bool IsPaid { get; set; }

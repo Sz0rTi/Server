@@ -82,6 +82,7 @@ namespace Managment.Services
             temp.Name = $"{temp.Code} {_context.Clients.Where(c => c.ID == temp.ClientID).First().Name}";
             foreach(var item in temp.ProductsSell)
             {
+                item.UserID = UserId;
                 var tempProduct = _context.Products.Where(p => p.ID == item.ProductID).First();
                 tempProduct.Amount -= item.Amount;
             }

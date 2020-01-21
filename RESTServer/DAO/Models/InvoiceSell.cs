@@ -17,6 +17,7 @@ namespace DAO.Models
         public double PriceBrutto { get; set; }
         public DateTime PaymentDeadline { get; set; }
         public bool IsPaid { get; set; }
+        public Guid PaymentMethodID { get; set; }
         public string UserID { get; set; }
         public virtual List<ProductSell> ProductsSell { get; set; }
         public virtual Client Client { get; set; }

@@ -102,7 +102,8 @@ namespace GUS
                 company.Street = odp.GetElementsByTagName("Ulica")[0].InnerText;
                 company.Number = odp.GetElementsByTagName("NrNieruchomosci")[0].InnerText;
                 company.NIP = odp.GetElementsByTagName("Nip")[0].InnerText;
-                if (odp.GetElementsByTagName("NrLokalu")[0].Name != "null") company.Number += "/" + odp.GetElementsByTagName("NrLokalu")[0].InnerText;
+                if (odp.GetElementsByTagName("NrLokalu")[0].InnerText != "")
+                    company.Number += "/" + odp.GetElementsByTagName("NrLokalu")[0].InnerText;
                 return company;
             }
             else

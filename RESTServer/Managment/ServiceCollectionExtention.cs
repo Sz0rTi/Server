@@ -21,6 +21,7 @@ namespace Managment
             services.AddScoped<IInvoiceBuyService, InvoiceBuyService>();
             services.AddScoped<ISellerService, SellerService>();
             services.AddScoped<IPDFService, PDFService>();
+            services.AddScoped<IPaymentService, PaymentService>();
         }
     }
 }

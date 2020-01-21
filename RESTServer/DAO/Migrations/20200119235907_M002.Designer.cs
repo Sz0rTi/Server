@@ -4,14 +4,16 @@ using DAO.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DAO.Migrations
 {
     [DbContext(typeof(MagazineContext))]
-    partial class MagazineContextModelSnapshot : ModelSnapshot
+    [Migration("20200119235907_M002")]
+    partial class M002
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -192,8 +194,6 @@ namespace DAO.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("Name");
-
-                    b.Property<string>("UserID");
 
                     b.HasKey("ID");
 
@@ -400,15 +400,15 @@ namespace DAO.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "c7001e71-c951-4350-bdd4-e3b450e0d92c",
-                            ConcurrencyStamp = "0b02bbe1-705f-4230-8592-0bced329c22d",
+                            Id = "8d09d664-988d-45d1-a5ac-7dc9740a736a",
+                            ConcurrencyStamp = "973f0436-73da-4767-a63a-529d9c1c5747",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "b34ea1f9-9a4e-4923-8d4c-1eecbc96a083",
-                            ConcurrencyStamp = "68f799bd-1033-4749-813e-930f36fa1238",
+                            Id = "629d8567-7990-44a1-bd49-c02cbab24256",
+                            ConcurrencyStamp = "7540b9f3-7982-4c37-8cfd-dfe6e693df48",
                             Name = "Admin"
                         });
                 });

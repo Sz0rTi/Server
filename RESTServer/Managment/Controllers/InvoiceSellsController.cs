@@ -93,7 +93,7 @@ namespace Managment.Controllers
         [HttpPost]
         public async Task<ActionResult<InvoiceSellOut>> PostInvoiceSell(InvoiceSellIn invoiceSell)
         {
-            return await _service.PostInvoiceSell(invoiceSell);
+            return Created("invoicesells",await _service.PostInvoiceSell(invoiceSell));
         }
 
         [HttpPost("bydate")]

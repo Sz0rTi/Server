@@ -17,6 +17,7 @@ namespace DAO.Models
         public double PriceNetto { get; set; }
         public double PriceBrutto { get; set; }
         public bool IsPaid { get; set; }
+        public Guid PaymentMethodID { get; set; }
         public string UserID { get; set; }
         public virtual Seller Seller { get; set; }
         public virtual List<ProductBuy> ProductsBuy { get; set; }

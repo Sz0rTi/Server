@@ -11,6 +11,7 @@ namespace Managment.Models.In
         public Guid ClientID { get; set; }
         public double PriceNetto { get; set; }
         public double PriceBrutto { get; set; }
+        public Guid PaymentMethodID { get; set; }
         public DateTime PaymentDeadline { get; set; }
         public bool IsPaid { get; set; }
         public List<ProductSellIn> ProductsSell { get; set; }

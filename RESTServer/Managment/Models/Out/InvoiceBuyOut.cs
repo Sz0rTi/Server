@@ -16,6 +16,7 @@ namespace Managment.Models.Out
         public DateTime PaymentDeadline { get; set; }
         public double PriceNetto { get; set; }
         public double PriceBrutto { get; set; }
+        public Guid PaymentMethodID { get; set; }
         public bool IsPaid { get; set; }
         public string UserID { get; set; }
         public List<ProductBuyOut> ProductsBuy { get; set; }

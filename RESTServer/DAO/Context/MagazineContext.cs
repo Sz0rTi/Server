@@ -23,6 +23,7 @@ namespace DAO.Context
         public DbSet<ProductSell> ProductsSell { get; set; }
         public DbSet<Seller> Sellers { get; set; }
         public DbSet<Purchase> Purchases { get; set; }
+        public DbSet<PaymentMethod> PaymentMethods { get; set; }
 
         public Task<object> FirstOrDefaultAsync()
         {
