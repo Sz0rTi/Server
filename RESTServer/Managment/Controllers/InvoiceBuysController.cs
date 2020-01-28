@@ -48,6 +48,12 @@ namespace Managment.Controllers
             return await _service.GetInvoicesBySellerID(id);
         }
 
+        [HttpGet("payinvoice/{id}")]
+        public async Task<ActionResult<InvoiceBuyOut>> GetPayInvoice(Guid id)
+        {
+            return await _service.GetPayInvoice(id);
+        }
+
         [HttpGet("min")]
         public async Task<ActionResult<InvoicesDate>> GetMinDate()
         {

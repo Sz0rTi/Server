@@ -23,10 +23,10 @@ namespace Managment.Controllers
 
         // GET: api/Units
         //[Authorize(Roles = "Admin")]
-        [HttpGet]
-        public async Task<ActionResult<List<Summary>>> GetSummaries(InvoicesDate date)
+        [HttpPost("list")]
+        public async Task<ActionResult<List<Summary>>> PostSummaries(InvoicesDate date)
         {
-            return await _service.GetSummaries(date);
+            return await _service.PostSummaries(date);
         }
 
         // GET: api/Units/5
@@ -34,6 +34,12 @@ namespace Managment.Controllers
         public async Task<ActionResult<Summary>> GetSummary(Guid id)
         {
             return await _service.GetSummary(id);
+        }
+
+        [HttpGet("min")]
+        public async Task<ActionResult<InvoicesDate>> GetMin()
+        {
+            return await _service.GetMinDate();
         }
 
         // POST: api/Units

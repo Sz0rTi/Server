@@ -47,6 +47,12 @@ namespace Managment.Controllers
             return await _service.PostProduct(product);
         }
 
+        [HttpPut("{id}")]
+        public async Task<ActionResult<ProductOut>> PutProduct(ProductIn product, Guid id)
+        {
+            return await _service.PutProduct(product, id);
+        }
+
         // DELETE: api/Products/5
         /*[HttpDelete("{id}")]
         public async Task<ActionResult<ProductOut>> DeleteProduct(Guid id)

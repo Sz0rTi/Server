@@ -34,7 +34,7 @@ namespace Managment.Controllers
         public async Task<IActionResult> PostLogin(LoginModel login)
         {
             var result = await _manager.PasswordSignInAsync(login.Email, login.Password, false, false);
-            if (!result.Succeeded) return BadRequest(new LoginResult { Successful = false, Error = "Błędny login lub hasło." });
+            if (!result.Succeeded) return Ok(new LoginResult { Successful = false, Error = "Błędny login lub hasło." });
             var user = await _manager.UserManager.FindByNameAsync(login.Email);
             var roles = await _manager.UserManager.GetRolesAsync(user);
             var claims = new List<Claim>();

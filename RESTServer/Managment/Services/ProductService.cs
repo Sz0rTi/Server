@@ -43,7 +43,7 @@ namespace Managment.Services
 
         public async Task<List<ProductOut>> GetProductsByCategoryID(Guid id)
         {
-            List<ProductOut> temp = _mapper.Map<List<ProductOut>>(await _context.Products.Where(e => e.UserID == UserId).Include(e => e.Category).Include(e => e.TaxStage).Include(e => e.Unit).Where(e=>e.CategoryID == id).ToListAsync());
+            List<ProductOut> temp = _mapper.Map<List<ProductOut>>(await _context.Products.Where(e => e.UserID == UserId).Include(e => e.Category).Include(e => e.TaxStage).Include(e => e.Unit).Where(e=>e.CategoryID == id).Take(10).ToListAsync());
             return temp;
         }
 
@@ -61,6 +61,15 @@ namespace Managment.Services
             await _context.SaveChangesAsync();
             return _mapper.Map<ProductOut>(temp);
         }
+
+        public async Task<ProductOut> PutProduct(ProductIn product, Guid id)
+        {
+            Product stock = _context.Products.Where(p=>p.ID == id).First();
+            stock.Description = product.Description;
+            _context.Entry(stock).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+            return _mapper.Map<ProductOut>(stock);
+        }
     }
 
     public interface IProductService
@@ -70,5 +79,6 @@ namespace Managment.Services
         Task<List<ProductOut>> GetProductsByCategoryID(Guid id);
         Task<ProductOut> PostProduct(ProductIn product);
         Task<TaxStageOut> GetTaxStageByProductId(Guid id);
+        Task<ProductOut> PutProduct(ProductIn product, Guid id);
     }
 }

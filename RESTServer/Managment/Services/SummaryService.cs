@@ -26,7 +26,7 @@ namespace Managment.Services
             _accessor = accessor;
             UserId = _context.Users.Where(u => u.UserName == _accessor.HttpContext.User.Identity.Name).First().Id;
         }
-        public async Task<List<Summary>> GetSummaries(InvoicesDate date)
+        public async Task<List<Summary>> PostSummaries(InvoicesDate date)
         {
             var temp = await _context.Summaries.Where(s => s.UserID == UserId && s.Month == date.Month && s.Year == date.Year).ToListAsync();
             return temp;
@@ -59,6 +59,7 @@ namespace Managment.Services
                             Amount = sell.Amount,
                             AvgBuyPrice = sell.BasePriceNetto,
                             AvgSellPrice = sell.PricePerItemNetto,
+                            AvgEarn = sell.PricePerItemNetto - sell.BasePriceNetto,
                             SumBought = sell.Amount * sell.BasePriceNetto,
                             SumSold = sell.Amount * sell.PricePerItemNetto,
                             SumEarned = (sell.Amount * sell.PricePerItemNetto) - (sell.Amount * sell.BasePriceNetto),
@@ -116,12 +117,29 @@ namespace Managment.Services
             await _context.SaveChangesAsync();
             return summary;
         }
+
+        public async Task<InvoicesDate> GetMinDate()
+        {
+            InvoicesDate MinDate = new InvoicesDate();
+            try
+            {
+                var temp = (from d in _context.Summaries.Where(i => i.UserID == UserId) select d.Date).Min();
+                MinDate.Month = temp.Month;
+                MinDate.Year = temp.Year;
+            }
+            catch (InvalidOperationException e)
+            {
+                return null;
+            }
+            return new InvoicesDate { Year = MinDate.Year, Month = MinDate.Month };
+        }
     }
 
     public interface ISummaryService
     {
         Task<Summary> GetSummary(Guid id);
-        Task<List<Summary>> GetSummaries(InvoicesDate date);
+        Task<List<Summary>> PostSummaries(InvoicesDate date);
         Task<Summary> PostSummary(InvoicesDate date);
+        Task<InvoicesDate> GetMinDate();
     }
 }

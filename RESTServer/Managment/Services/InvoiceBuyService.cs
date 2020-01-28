@@ -48,6 +48,14 @@ namespace Managment.Services
             return _mapper.Map<List<InvoiceBuyOut>>(temp);
         }
 
+        public async Task<InvoiceBuyOut> GetPayInvoice(Guid id)
+        {
+            var temp = _context.InvoicesBuy.Where(i => i.UserID == UserId).Where(i => i.ID == id).First();
+            temp.IsPaid = true;
+            _context.SaveChanges();
+            return _mapper.Map <InvoiceBuyOut>(_context.InvoicesBuy.Where(i => i.UserID == UserId).Where(i => i.ID == id).First());
+        }
+
         public async Task<InvoicesDate> GetMinDate()
         {
             InvoicesDate MinDate = new InvoicesDate();
@@ -104,6 +112,7 @@ namespace Managment.Services
         Task<List<InvoiceBuyOut>> GetInvoiceBuys();
         Task<List<InvoiceBuyOut>> GetInvoicesBySellerID(Guid id);
         Task<InvoiceBuyOut> GetInvoiceBuy(Guid id);
+        Task<InvoiceBuyOut> GetPayInvoice(Guid id);
         Task<InvoiceBuyOut> PostInvoiceBuy(InvoiceBuyIn invoice);//, string user);
         Task<InvoicesDate> GetMinDate();
         Task<List<InvoiceBuy>> PostInvoicesByDate(InvoicesDate date);

@@ -68,7 +68,6 @@ namespace RESTServer
                     };
                 });
             services.AddManagment();
-            //services.AddScoped<IPDFService, PDFService>();
             services.AddAutoMapper();
 
             #region CrossOrgin

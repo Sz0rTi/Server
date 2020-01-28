@@ -15,6 +15,7 @@ namespace Managment.Models.Out
         public string ClientID { get; set; }
         public double PriceNetto { get; set; }
         public double PriceBrutto { get; set; }
+        public string Code { get; set; }
         public DateTime PaymentDeadline { get; set; }
         public bool IsPaid { get; set; }
         public Guid PaymentMethodID { get; set; }
