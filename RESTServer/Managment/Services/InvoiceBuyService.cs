@@ -53,7 +53,7 @@ namespace Managment.Services
             var temp = _context.InvoicesBuy.Where(i => i.UserID == UserId).Where(i => i.ID == id).First();
             temp.IsPaid = true;
             _context.SaveChanges();
-            return _mapper.Map <InvoiceBuyOut>(_context.InvoicesBuy.Where(i => i.UserID == UserId).Where(i => i.ID == id).First());
+            return _mapper.Map <InvoiceBuyOut>(temp);
         }
 
         public async Task<InvoicesDate> GetMinDate()

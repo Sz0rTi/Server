@@ -64,6 +64,10 @@ namespace Managment.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> PostRegister(RegisterModel model)
         {
+            /*if(_manager.UserManager.FindByEmailAsync(model.Email) != null)
+            {
+                return Ok(new RegisterResult { Successful = false, Errors = new List<string> { new string("E-mail zajęty!")} });
+            }*/
             ApplicationUser user = new ApplicationUser();
             if (model.Password == model.ConfirmPassword)
             {               

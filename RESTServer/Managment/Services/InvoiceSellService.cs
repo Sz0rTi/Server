@@ -98,6 +98,14 @@ namespace Managment.Services
                 .Where(i => i.Date.Year == date.Year && i.Date.Month == date.Month).ToListAsync());
             return temp;
         }
+
+        public async Task<InvoiceSellOut> GetPayInvoice(Guid id)
+        {
+            var temp = _context.InvoicesSell.Where(i => i.UserID == UserId).Where(i => i.ID == id).First();
+            temp.IsPaid = true;
+            _context.SaveChanges();
+            return _mapper.Map<InvoiceSellOut>(temp);
+        }
     }
 
     public interface IInvoiceSellService
@@ -105,6 +113,7 @@ namespace Managment.Services
         Task<List<InvoiceSellOut>> GetInvoiceSells();
         Task<List<InvoiceSellOut>> GetInvoicesByClientID(Guid id);
         Task<InvoiceSellOut> GetInvoiceSell(Guid id);
+        Task<InvoiceSellOut> GetPayInvoice(Guid id);
         Task<InvoiceSellOut> PostInvoiceSell(InvoiceSellIn invoice);
         Task<List<InvoiceSell>> PostInvoicesByDate(InvoicesDate date);
         Task<InvoicesDate> GetMinDate();
