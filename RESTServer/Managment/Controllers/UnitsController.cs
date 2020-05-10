@@ -14,15 +14,14 @@ namespace Managment.Controllers
     public class UnitsController : ControllerBase
     {
         //private readonly MagazineContext _context;
-        private readonly IUnitService _service;
-
-        public UnitsController(IUnitService service)
-        {
-            _service = service;
-        }
+        private readonly IUnitService _service;      //
+                                                     //
+        public UnitsController(IUnitService service) // wstrzykiwanie 
+        {                                            // zależności
+            _service = service;                      // przez konstruktor
+        }                                            //
 
         // GET: api/Units
-        //[Authorize(Roles = "Admin")]
         [HttpGet]
         public async Task<ActionResult<List<UnitOut>>> GetUnits()
         {

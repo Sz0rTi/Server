@@ -37,6 +37,7 @@ namespace Managment.Services
                 .Include(i=>i.ProductsSell).First();
             ApplicationUser user = _context.Users.Where(u => u.Id == invoice.UserID).First();
             Client client = _context.Clients.Where(c => c.ID == invoice.ClientID).First();
+            PaymentMethod pmethod = _context.PaymentMethods.Where(p => p.ID == invoice.PaymentMethodID).First();
 
             var test = new ReportGenerator(@"E:\Projekty\GitHub\SERWER\RESTServer\RESTServer");
 
@@ -55,7 +56,7 @@ namespace Managment.Services
                 $"<div>NIP: {client.NIP}</div><br>" +
                 $"<div>Data wystawienia: {invoice.Date}</div>" +
                 $"<div>Termin płatności: {invoice.PaymentDeadline}</div>" +
-                $"<div>SPOSÓB PŁATNOŚCI</div>" +
+                $"<div>Sposób płatności: {pmethod.Name}</div>" +
                 $"</div></header><main>" +
                 $"<table align=\"center\">" +
                 $"<thead><tr>" +

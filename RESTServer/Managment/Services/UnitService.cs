@@ -27,29 +27,14 @@ namespace Managment.Services
             _context = context;
             _accessor = accessor;
             UserId = _context.Users.Where(u => u.UserName == _accessor.HttpContext.User.Identity.Name).First().Id;
-        }
-
-        public async Task<UnitOut> DeleteUnit(Guid id)
-        {
-            Unit temp = await _context.Units.FirstOrDefaultAsync(e => e.ID == id);
-            if (temp != null) _context.Units.Remove(temp);
-            await _context.SaveChangesAsync();
-            return _mapper.Map<UnitOut>(temp);
-
-            
+            // Na zmienną UserId przypisane zostaje id użytkownika na podstawie przesłanego przez niego tokenu.
         }
 
         public async Task<UnitOut> GetUnit(Guid id)
-        { 
-            UnitOut temp = _mapper.Map<UnitOut>(await _context.Units.FirstOrDefaultAsync());
+        {                                                       //  |filtrowanie po id użytkownika|
+            UnitOut temp = _mapper.Map<UnitOut>(await _context.Units.Where(e => e.UserID == UserId)
+                                                                    .FirstOrDefaultAsync());
             if (temp == null) return null;
-            return temp;
-        }
-
-        public async Task<UnitOut> GetUnitByProductId(Guid id)
-        {
-            Product product = _context.Products.First(e => e.ID == id);
-            UnitOut temp = _mapper.Map<UnitOut>(await _context.Units.Where(e => e.ID == product.UnitID).FirstAsync());
             return temp;
         }
 
@@ -59,11 +44,29 @@ namespace Managment.Services
             return temp;
         }
 
+        public async Task<UnitOut> GetUnitByProductId(Guid id)
+        {
+            Product product = _context.Products.First(e => e.ID == id);
+            UnitOut temp = _mapper.Map<UnitOut>(await _context.Units.Where(e => e.UserID == UserId)
+                                                                    .Where(e => e.ID == product.UnitID).FirstAsync());
+            return temp;
+        }
+
+        
+
         public async Task<UnitOut> PostUnit(UnitIn unit)
         {
             Unit temp = _mapper.Map<Unit>(unit);
             temp.UserID = UserId;
             _context.Units.Add(temp);
+            await _context.SaveChangesAsync();
+            return _mapper.Map<UnitOut>(temp);
+        }
+
+        public async Task<UnitOut> DeleteUnit(Guid id)
+        {
+            Unit temp = await _context.Units.FirstOrDefaultAsync(e => e.ID == id);
+            if (temp != null) _context.Units.Remove(temp);
             await _context.SaveChangesAsync();
             return _mapper.Map<UnitOut>(temp);
         }
